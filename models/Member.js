@@ -24,13 +24,11 @@ const MemberSchema = new Schema({
     type: String,
     required: true
   },
-  access: {
+  imageUrl: {
     type: String,
-    ref: 'AccessToken',
-    required: true,
-    trim: true,
-    unique: true
+    default: ''
   },
+  
   auth: {
     type: Array,
     default: ['member']

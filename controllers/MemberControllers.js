@@ -2,15 +2,14 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const Member = require('../models/Member');
-const memberAuthReducer = require('../helpers/memberAuthReducer')
+const Profile = require('../models/Profile');
+const memberAuthReducer = require('../helpers/memberAuthReducer');
+const { getDataURI } = require('../helpers/dataURI')
+const { cloudinaryUploader } = require('../config/cloudinaryConfig')
 const getAllMembers = (req, res) => {
-
   Member.find({})
-    .populate({
-      path: 'group',
-      select: ['name'],
-      model: Group
-    })
+    .select('-password')
+    
     .then(members => {
       return res.status(200).json({
         status: true,
@@ -28,6 +27,7 @@ const getAllMembers = (req, res) => {
     });
 }
 
+// Register/Signup new members
 const registerMember = (req, res) => {
   const errorsContainer = validationResult(req);
   if (!errorsContainer.isEmpty()) {
@@ -38,7 +38,6 @@ const registerMember = (req, res) => {
   }
   // ?Passed all validations 
   const {
-    access, //6 characters => note entered directly by user
     firstname,
     middlename,
     lastname,
@@ -55,14 +54,15 @@ const registerMember = (req, res) => {
         });    
       }
       
-
+      // No member exists
       let memberReq = {
-        access,
+        // Required fields
         firstname,
         lastname,
         email,
         password
       };
+      
       if(middlename) memberReq.middlename = middlename;
       const newMember = new Member(memberReq);
 
@@ -75,9 +75,9 @@ const registerMember = (req, res) => {
 
           newMember.password = hash;
           newMember.save(err => {
-            if (err) return res.status(500).json({ status: false, error: 'Server error:: Failed to save user' });
+            if (err) return res.status(500).json({ status: false, error: 'Invalid credentials! please confirm access token' });
 
-            const payload = { memberId: newMember._id, access: newMember.access, auth: newMember.auth };
+            const payload = { memberId: newMember._id, auth: newMember.auth };
             jwt.sign(
               payload,
               process.env.JWT_SECRET_KEY,
@@ -171,6 +171,87 @@ const getMemberByToken = (req, res) => {
     });
 }
 
+const updateMemberData = (req, res) => {
+  const memberId = req.currentMember.memberId;
+  Member.findOne({ _id: memberId})
+    .select('-password')
+    .then(member => {
+      if (!member) {
+        return res.status(404).json({
+          status: false,
+          error: 'No member found'
+        })
+      }
+
+      // Member found
+      const { firstname, lastname, middlename, email} = req.body;
+      if(firstname) member.firstname = firstname;
+      if(lastname) member.lastname = lastname;
+      if(middlename) member.middlename = middlename;
+      if(email) member.email = email;
+      member.save(err => {
+        if (err) {
+          return res.status(404).json({
+          status: false,
+          error: 'No member found'
+        })
+        }
+
+        return res.status(200).json({
+          status: true,
+          message: 'Updated member data',
+          data: member
+        })
+
+      })
+    })
+    .catch(err => {
+      return res.status(500).json({
+          status: false,
+          error: 'Faied to update member'
+        })
+    })
+};
+
+const changePassword = (req, res) => {};
+const updateMemberImage = (req, res) => {
+  const memberId = req.currentMember.memberId;
+  const dataURI = getDataURI(req);
+
+  if (!dataURI) {
+     return res.status(404).json({
+          status: false,
+          error: 'No data found'
+        })
+  }
+
+  cloudinaryUploader.upload(dataURI, { public_id: memberId})
+    .then(result => {
+        const { secure_url } = result;
+        
+        Member.findOneAndUpdate({ _id: memberId}, { imageUrl: secure_url}, {upsert: true, new: true})
+          .then(member => {
+            return res.status(200).json({
+                status: true,
+                message: 'Updated member profile',
+                data: member
+              })
+          }).catch(err=>{
+             return res.status(500).json({
+                  status: false,
+                  error: 'Could not update data'
+                })
+          })
+    })
+    .catch(err => {
+       return res.status(500).json({
+          status: false,
+          error: 'Could not upload data'
+        })
+    })
+
+};
+
 const manageMemberAuth = (req, res) => {
   const errorsContainer = validationResult(req);
   if (!errorsContainer.isEmpty()) {
@@ -192,8 +273,6 @@ const manageMemberAuth = (req, res) => {
       }
     //  Update Member Auth
     member.auth = memberAuthReducer(member.auth, actionType);
-      
-
       member.save(err => {
 
         if (err) {
@@ -222,7 +301,62 @@ const manageMemberAuth = (req, res) => {
 }
 
 const toggleMemberAdminAuth = (req, res) => {
-  const memberId = req.params.memberId;
+ 
+  const errorsContainer = validationResult(req);
+  if (!errorsContainer.isEmpty()) {
+    return res.status(422).json({
+      status: false,
+      errors: errorsContainer.errors.map(err => err.msg)
+    });
+  }
+  const { email } = req.body;
+  Member.findOne({ email })
+    .select('-password')
+    .then(member => {
+      if (!member) {
+        return res.status(404).json({
+          status: false,
+          error: 'No Such Memneber'
+        });
+      }
+
+      if (!member.auth.includes('admin')) {
+        member.auth = [...member.auth, 'admin'];
+      } else {
+        member.auth = member.auth.filter(auth => auth !== 'admin')
+      }
+      
+
+      member.save(err => {
+        if (err) {
+          return res.status(500).json({
+            status: false,
+            error: 'Failed to update member auth'
+          });
+        }
+
+        return res.status(200).json({
+          status: true,
+          message: 'Member Admin Auth Updated',
+          data: member 
+        });
+      });
+    })
+    .catch(err => {
+
+      return res.status(500).json({
+        status: false,
+        error: 'Failed to get member'
+      });
+
+    });
+}
+
+const toggleMemberAdminAuthByMemberId = (req, res) => {
+ 
+  
+  
+  const { memberId } = req.params;
   Member.findOne({ _id: memberId })
     .select('-password')
     .then(member => {
@@ -241,7 +375,6 @@ const toggleMemberAdminAuth = (req, res) => {
       
 
       member.save(err => {
-        
         if (err) {
           return res.status(500).json({
             status: false,
@@ -252,8 +385,7 @@ const toggleMemberAdminAuth = (req, res) => {
         return res.status(200).json({
           status: true,
           message: 'Member Admin Auth Updated',
-          data: member
-  
+          data: member 
         });
       });
     })
@@ -266,29 +398,55 @@ const toggleMemberAdminAuth = (req, res) => {
 
     });
 }
-const deleteMemberById = (req, res) => {
 
-  
+const deleteMemberById =  async (req, res) => {
   const { memberId } = req.params;
-  
-  Member.findOneAndRemove({ _id: memberId }, (err, result) => {
-    if (err) {
-      return res.status(500).json({
-        status: false,
-        error: 'Failed to delete member'
-      });
-    }
-
+  try {
+    await Member.findOneAndRemove({_id: memberId})
+    await Profile.findOneAndRemove({member: memberId})
+    
     return res.status(200).json({
       status: true,
       message: 'Deleted member',
       data: memberId
     });
+  } catch (err) {
+    return res.status(500).json({
+      status: false,
+      error: 'Failed to delete member'
+    });
+    
+  }
+};
 
-  });
+const flushAll =  async (req, res) => {
+ 
+  try {
+    await Member.deleteMany({})
+    await Profile.deleteMany({})
+    
+    return res.status(200).json({
+      status: true,
+      message: 'Data flushed'
+
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: false,
+      error: 'Failed to delete data'
+    });
+    
+  }
 };
 
 module.exports = { getAllMembers, registerMember, loginMember, 
   toggleMemberAdminAuth,
+  toggleMemberAdminAuthByMemberId,
+  updateMemberData,
+  changePassword,
   manageMemberAuth,
-  getMemberByToken, deleteMemberById };
+  getMemberByToken, 
+  deleteMemberById,
+  updateMemberImage,
+  flushAll
+ };
