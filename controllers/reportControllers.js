@@ -29,6 +29,11 @@ const generateReportForProfiles = (req, res) => {
             error: 'No reports: failed to generate report'
           })
       }
+    
+    // Convert JSON to Bufferls
+    // const reportBuffer = Buffer.from(JSON.stringify(reportData));
+    // Get Data URI
+
 
     const path2file = "reports/master_" + Date.now() + "_report.csv";
     const ws = fs.createWriteStream(path2file);
