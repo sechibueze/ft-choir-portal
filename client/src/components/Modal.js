@@ -10,7 +10,7 @@ const Modal = ({ children, visible, closeModal }) => {
     <div className="modal-container">
       <span onClick={() => closeModal() } className="modal-close clearfix">X</span>
       <div className="modal-header">
-        <h1 className="text-lead">FT Portal </h1>
+        <h1 className="text-lead">FTC Portal </h1>
         <span className="text-info"></span>
       </div>
       <div className="modal-body">

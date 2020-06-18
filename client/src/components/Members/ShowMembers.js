@@ -22,10 +22,13 @@ const ShowMembers = ({loading, members,
   flushData,
   flushAllData
  }) => {
-  const [visible, setVisibility] = useState(false)
+  const [status, setStatus] = useState({
+    id: null,
+    open: false
+  })
   useEffect(() => {
     loadMembers()
-  }, [visible, deletedMember, adminAuth, flushData])
+  }, [status, deletedMember, adminAuth, flushData])
 
   const handleToggleAdminAuth = (memberId) => {
     if (window.confirm('Are you sure ?')) {
@@ -42,14 +45,30 @@ const ShowMembers = ({loading, members,
       flushAllData()
     }
   }
+  const showProfile = (id) => {
+    setStatus(prev => ({
+      ...prev,
+      open: true,
+      id
+    }))
+  }
+  const closeModal = () => {
+
+    setStatus(prev => ({
+      ...prev,
+      open: false,
+      id: null
+    }))
+  
+  }
 
 
   if(!members) return <Loader />
+  const { id, open} = status;
   return (     
     <AuthContainer>
       <Fragment>
         <Alert origin='MEMBER' />
-
         
           {
            members !== null && members.length < 1 ? (
@@ -61,12 +80,22 @@ const ShowMembers = ({loading, members,
                   <GenerateProfileReport />
                 </div>
               </div>
+              <div>
+                {
+                  id && open ? (
+                    <Modal visible={open} closeModal={() => closeModal()}>
+                      <ShowMemberProfile memberId={id} />
+                    </Modal>
+                  ): null
+                }
+              </div>
            
               <div className="container90">
                 <table className="table">
                 <thead>
                   <tr>
                     <td>S/N</td>
+                    {/* <td>_id </td> */}
                     <td>View </td>
                     <td>Firstname</td>
                     <td>Middlename</td>
@@ -84,12 +113,10 @@ const ShowMembers = ({loading, members,
                   
                     <tr>
                       <td> { ++idx} </td>
+                      {/* <td> {member._id} </td> */}
                       <td className="" >
-                       <span className="fa fa-eye" onClick={() => setVisibility(true)}>
-                          <Modal visible={visible} closeModal={() => setVisibility(false)}>
-                            <ShowMemberProfile memberId={member._id} />
-                          </Modal>
-                       </span>
+                       <span className="fa fa-eye" onClick={() => showProfile(member._id)} />
+                          
                       </td>
                       <td> { member.firstname} </td>
                       <td> { member.middlename} </td>

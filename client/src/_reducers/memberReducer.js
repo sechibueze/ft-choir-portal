@@ -2,14 +2,20 @@ import {
   LOAD_MEMBERS,
   GET_MEMBER_PROFILE,
   UPDATE_MEMBER_IMAGE,
-  DELETE_MEMBER
+  DELETE_MEMBER,
+
+  SEND_PASSWORD_RESET_TOKEN,
+  RESET_MEMBER_PASSWORD
  
 } from '../_actions/types';
 const initialState = {
   members: null,
   memberData: null,
   memberImage: null,
-  deletedMember: null
+  deletedMember: null,
+  passwordResetToken: null,
+  passwordReset: null
+
 };
 export default function (state = initialState, action) {
   const { type, payload} = action;
@@ -34,6 +40,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         deletedMember: payload
+      };
+    case SEND_PASSWORD_RESET_TOKEN:
+      return {
+        ...state,
+        passwordResetToken: payload
+      };
+    case RESET_MEMBER_PASSWORD:
+      return {
+        ...state,
+        passwordReset: payload
       };
     
     default:

@@ -12,6 +12,9 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const AUTH_FAIL = 'AUTH_FAIL';
 export const LOGOUT = 'LOGOUT';
 
+export const SEND_PASSWORD_RESET_TOKEN = 'SEND_PASSWORD_RESET_TOKEN';
+export const RESET_MEMBER_PASSWORD = 'RESET_MEMBER_PASSWORD';
+
 // Used By Auth
 export const LOAD_CURRENT_MEMBER = 'LOAD_CURRENT_MEMBER';
 

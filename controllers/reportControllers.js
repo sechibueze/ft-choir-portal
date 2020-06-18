@@ -37,7 +37,7 @@ const generateReportForProfiles = (req, res) => {
 
     const path2file = "reports/master_" + Date.now() + "_report.csv";
     const ws = fs.createWriteStream(path2file);
-
+      // console.log('repord', reportData)
     fastcsv
       .write(JSON.parse(reportData), { headers: true })
       .on("finish", function () {

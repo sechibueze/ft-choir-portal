@@ -5,9 +5,12 @@ import {
   LOAD_MEMBERS,
   GET_MEMBER_PROFILE,
   UPDATE_MEMBER_IMAGE,
-  DELETE_MEMBER
+  DELETE_MEMBER,
+
+  SEND_PASSWORD_RESET_TOKEN,
+  RESET_MEMBER_PASSWORD
 } from '../_actions/types';
-import { handleResponseErrors } from './alertActions';
+import { handleResponseErrors, setAlert } from './alertActions';
 import { getConfigHeaders } from './authActions';
 
 export const loadMembers = () => dispatch => {
@@ -56,6 +59,43 @@ export const updateMemberImage = imageData => dispatch => {
       dispatch(handleResponseErrors(err, 'MEMBER_IMAGE'));
     });
 };
+
+export const sendPasswordResetToken = data => dispatch => {
+  dispatch({ type: LOADING });
+  const configHeaders = getConfigHeaders();
+  // localhost:5000/api/members/forgotpassword
+  axios.put(`/api/members/forgotpassword`, data,  configHeaders)
+    .then(({ data }) => {
+      console.log('Loaded members ', data)
+      dispatch({ type: SEND_PASSWORD_RESET_TOKEN, payload: data });
+      dispatch(setAlert(data.message, SEND_PASSWORD_RESET_TOKEN))
+      dispatch({ type: LOADED });
+    })
+    .catch(err => {
+      console.log('Error iin loading members', err)
+      dispatch(handleResponseErrors(err, 'SEND_PASSWORD_RESET_TOKEN'));
+    });
+};
+
+
+
+export const resetMemberPassword = data => dispatch => {
+  dispatch({ type: LOADING });
+  const configHeaders = getConfigHeaders();
+  // localhost:5000/api/members/forgotpassword
+  axios.put(`/api/members/resetpassword`, data,  configHeaders)
+    .then(({ data }) => {
+      console.log('Loaded members ', data)
+      dispatch({ type: RESET_MEMBER_PASSWORD, payload: data });
+      dispatch(setAlert(data.message, RESET_MEMBER_PASSWORD))
+      dispatch({ type: LOADED });
+    })
+    .catch(err => {
+      console.log('Error iin loading members', err)
+      dispatch(handleResponseErrors(err, 'RESET_MEMBER_PASSWORD'));
+    });
+};
+
 
 export const deleteMemberById = memberId => dispatch => {
   dispatch({ type: LOADING });

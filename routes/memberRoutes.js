@@ -8,7 +8,7 @@ const { getAllMembers, registerMember,
   loginMember, 
   updateMemberData,
   toggleMemberAdminAuthByMemberId,
-  changePassword,
+  forgotPassword, resetPassword,
   getMemberByToken, 
   deleteMemberById,
   updateMemberImage,
@@ -61,11 +61,24 @@ router.get('/auth', checkMember, getMemberByToken);
 router.put('/', checkMember, updateMemberData);
 
 /**
- * @route PUT /api/members/password
- * @desc Change password
- * @access private 
+ * @route PUT /api/members/forgotpassword
+ * @desc send password reset token
+ * @access public 
  */
-router.put('/passwords',  changePassword);
+router.put('/forgotpassword', [
+   check('email', 'Email is required').isEmail()
+], forgotPassword);
+
+/**
+ * @route PUT /api/members/forgotpassword
+ * @desc Change password
+ * @access public 
+ */
+router.put('/resetpassword', [
+   check('password', 'Password is required').notEmpty(),
+   check('passwordResetToken', 'No Token found').notEmpty()
+], resetPassword);
+
 /**
  * @route PUT /api/members/image
  * @desc Change image

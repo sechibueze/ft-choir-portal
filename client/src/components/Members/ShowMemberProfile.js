@@ -17,6 +17,7 @@ import ShowPersonalInfo from '../Profile/ShowPersonalInfo';
 
 
 const ShowMemberProfile = ({ memberId, memberData, loadProfileByMemberId }) => {
+  // if(!memberId) return null
   useEffect(() => {
     loadProfileByMemberId(memberId)
   }, [memberId])
@@ -24,11 +25,11 @@ const ShowMemberProfile = ({ memberId, memberData, loadProfileByMemberId }) => {
   if(!memberData) return <Loader />
   return ( 
     <Fragment>
-      <ShowNOKData nok={memberData.nok} />
       <ShowAuthData member={memberData.member} />
-      <ShowChurchInfo churchInfo={memberData.church_info} />
-      <ShowUnitInfo unitInfo={memberData.unit_info} />
       <ShowPersonalInfo personal={memberData} />
+      <ShowUnitInfo unitInfo={memberData.unit_info} />
+      <ShowChurchInfo churchInfo={memberData.church_info} />
+      <ShowNOKData nok={memberData.nok} />
 
     </Fragment>
    );

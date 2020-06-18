@@ -26,12 +26,25 @@ app.use('/api/members', memberRoutes);
 app.use('/api/profiles', profileRoutes);
 app.use('/api/reports', reportRoutes);
 
-// app.use((req, res) => {
-//   return res.status(200).json({
-//     status: true,
-//     message: 'ft choir portal running'
-//   });
+
+// app.get('/mail',(req, res) => {
+  
+// const msg = {
+//   to: 'sechibueze@gmail.com',
+//   from: 'test@example.com',
+//   subject: 'Sending with SendGrid is Fun',
+//   text: 'and easy to do anywhere, even with Node.js',
+//   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+// };
+// sgMail.send(msg)
+//   .then(response => console.log('email::', response))
+//   .catch(err => console.log('err', err));
+//   // return res.status(200).json({
+//   //   status: true,
+//   //   message: 'ft choir portal running'
+//   // });
 // });
+
 if (process.env.NODE_ENV === 'production') {
     // set static folder 
     app.use(express.static('client/build'));

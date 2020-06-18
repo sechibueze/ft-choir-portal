@@ -1,11 +1,20 @@
 import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Navbar from '../Navbar';
-// import Alert from '../Alert';
+import Alert from '../Alert';
+import { resetMemberPassword } from '../../_actions/memberActions';
 
-const ResetPassword = ({ match}) => {
-  const [data, setData] = useState({ password: ''});
+const ResetPassword = ({
+   match,
+   resetMemberPassword,
+   passwordReset
+  }) => {
+  const [data, setData] = useState({ 
+    password: '', 
+    passwordResetToken: match.params.token
+  });
   const handleChange = ({target}) => {
     setData(prev => ({
       ...prev,
@@ -14,7 +23,9 @@ const ResetPassword = ({ match}) => {
   }
   const handleResetPassword = e => {
     e.preventDefault()
-    window.confirm('Password reset to + ' + data.password)
+    console.log('Reset data', data)
+    // window.confirm('Password reset to + ' + data.password)
+    resetMemberPassword(data)
   }
   const { password } = data;
   return (
@@ -22,6 +33,7 @@ const ResetPassword = ({ match}) => {
       <Navbar />
       <div className="container">
          <form className="form" onSubmit={handleResetPassword}>
+           <Alert origin='RESET_MEMBER_PASSWORD' />
           <div className="form-group">
             <label htmlFor="password">Password <sup>*</sup></label>
             <input type="password" name="password" value={password} onChange={handleChange} className="form-control" id="password" required />
@@ -36,11 +48,12 @@ const ResetPassword = ({ match}) => {
 }
  
 ResetPassword.propTypes = {
-  loading: PropTypes.func.isRequired
+  resetMemberPassword: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
-  loading: state.auth.loading
+  loading: state.auth.loading,
+  passwordReset: state.members.passwordReset
 });
-export default connect(mapStateToProps)(ResetPassword);
+export default connect(mapStateToProps, { resetMemberPassword })(ResetPassword);
  

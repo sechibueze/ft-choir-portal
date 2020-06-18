@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
+const EmailService = require('../helpers/sendEmail')
 const Member = require('../models/Member');
 const Profile = require('../models/Profile');
 const memberAuthReducer = require('../helpers/memberAuthReducer');
@@ -213,7 +214,148 @@ const updateMemberData = (req, res) => {
     })
 };
 
-const changePassword = (req, res) => {};
+const forgotPassword = (req, res) => {
+  const errorsContainer = validationResult(req);
+  if (!errorsContainer.isEmpty()) {
+    return res.status(422).json({
+      status: false,
+      errors: errorsContainer.errors.map(err => err.msg)
+    });
+  }
+
+  // passed validations
+  const { email } =  req.body;
+  Member.findOne({ email })
+    .then(async member => {
+      if (!member) {
+        return res.status(404).json({
+          status: false,
+          errors: 'No such member record exists'
+        });
+      }
+
+      // Member found send password reset link
+      // generate and set password rest token
+      member.generatePasswordReset()
+      await member.save()
+      // console.log('member token', member.resetPasswordToken)
+      const link = `${process.env.CLIENT}/password-reset/${ member.resetPasswordToken}`
+      const msg = {
+        to: email,
+        from: process.env.SENDER_MAIL,
+        subject: 'Password Reset',
+        text: 'and easy to do anywhere, even with Node.js',
+        html: `
+          Dear ${ member.firstname },
+          <br />
+          <br />
+          You are receiving this email because you have requested to reset your password for FTC portal,
+          Please, click on the link below to reset your password or copy the link and paste in your browser,
+          <br />
+          <br />
+
+          <a href="${link}" 
+            style="text-decoration: none;padding: 1rem 2.25rem; font-size: 1.2rem; font-weight: 900; background-color: red; color: white; margin: auto; text-align: center; display: block; width: 80%;"
+          > Reset Password </a>
+          <br />
+          <br />
+
+          ${ link }
+
+          <br />
+          <br />
+
+        Stay blessed, <br />
+        FTC Team
+
+
+        `,
+      };
+
+      EmailService.send(msg)
+        .then(response => {
+          return res.status(200).json({
+            status: true,
+            message: `Password reset link sent to ${ email }`,
+            data: response
+          });
+        })
+        .catch(err => {
+          return res.status(500).json({
+            status: false,
+            errors: 'Failed to send email'
+          });
+        })
+
+    
+
+    })
+    .catch(err => {
+      return res.status(500).json({
+        status: false,
+        errors: 'Failed to retrieve member'
+      });
+    })
+};
+
+const resetPassword = (req, res) => {
+  const errorsContainer = validationResult(req);
+  if (!errorsContainer.isEmpty()) {
+    return res.status(422).json({
+      status: false,
+      errors: errorsContainer.errors.map(err => err.msg)
+    });
+  }
+
+  // passed validations
+  const { passwordResetToken, password } =  req.body;
+  Member.findOne({resetPasswordToken: passwordResetToken })
+    .then(async member => {
+      if (!member) {
+        return res.status(404).json({
+          status: false,
+          errors: 'No such member record exists'
+        });
+      }
+
+      // Member found 
+      // Update Password and cancel token
+      bcrypt.genSalt(10, (err, salt) => {
+        if (err) return res.status(500).json({ status: false, error: 'Server error:: Failed to generate salt' });
+
+        bcrypt.hash(password, salt, (err, hash) => {
+          if (err) return res.status(500).json({ status: false, error: 'Server error:: Failed to hash password' });
+
+          member.password = hash;
+          member.resetPasswordToken = "";
+
+          member.save(err => {
+            if (err) return res.status(500).json({ status: false, error: 'Invalid credentials! please confirm access token' });
+
+            
+                return res.status(200).json({
+                  status: true,
+                  message: 'Password reset successful',
+                  data: passwordResetToken
+                });
+
+
+            
+          })
+
+        })
+      })   
+
+    })
+    .catch(err => {
+      return res.status(500).json({
+        status: false,
+        errors: 'Failed to retrieve member'
+      });
+    })
+};
+
+
 const updateMemberImage = (req, res) => {
   const memberId = req.currentMember.memberId;
   const dataURI = getDataURI(req);
@@ -443,7 +585,8 @@ module.exports = { getAllMembers, registerMember, loginMember,
   toggleMemberAdminAuth,
   toggleMemberAdminAuthByMemberId,
   updateMemberData,
-  changePassword,
+  forgotPassword,
+  resetPassword,
   manageMemberAuth,
   getMemberByToken, 
   deleteMemberById,

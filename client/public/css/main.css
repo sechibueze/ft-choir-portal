@@ -829,6 +829,11 @@ table.table tbody td {
   margin-right: 2.75rem;
 }
 
+@media (max-width: 520px) {
+  .container {
+    width: 90%;
+  }
+}
 @media (max-width: 760px) {
   .navbar .menu-toggler {
     display: block;
