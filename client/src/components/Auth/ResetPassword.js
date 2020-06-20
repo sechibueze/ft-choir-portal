@@ -1,6 +1,5 @@
 import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
-// import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Navbar from '../Navbar';
 import Alert from '../Alert';
@@ -22,10 +21,8 @@ const ResetPassword = ({
     }))
   }
   const handleResetPassword = e => {
-    e.preventDefault()
-    console.log('Reset data', data)
-    // window.confirm('Password reset to + ' + data.password)
-    resetMemberPassword(data)
+    e.preventDefault();
+    resetMemberPassword(data);
   }
   const { password } = data;
   return (

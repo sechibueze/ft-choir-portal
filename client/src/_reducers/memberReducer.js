@@ -1,6 +1,7 @@
 import {
   LOAD_MEMBERS,
   GET_MEMBER_PROFILE,
+  CLEAR_MEMBER_PROFILE,
   UPDATE_MEMBER_IMAGE,
   DELETE_MEMBER,
 
@@ -30,6 +31,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         memberData: payload
+      };
+    case CLEAR_MEMBER_PROFILE:
+      return {
+        ...state,
+        memberData: null
       };
     case UPDATE_MEMBER_IMAGE:
       return {

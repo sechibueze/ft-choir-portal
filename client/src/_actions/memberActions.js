@@ -4,6 +4,7 @@ import {
   LOADED,
   LOAD_MEMBERS,
   GET_MEMBER_PROFILE,
+  CLEAR_MEMBER_PROFILE,
   UPDATE_MEMBER_IMAGE,
   DELETE_MEMBER,
 
@@ -43,6 +44,9 @@ export const loadProfileByMemberId = memberId => dispatch => {
       console.log('Error iin loading members', err)
       dispatch(handleResponseErrors(err, 'PROFILE'));
     });
+};
+export const clearMemberProfile = () => dispatch => {
+  dispatch({ type: CLEAR_MEMBER_PROFILE });
 };
 
 export const updateMemberImage = imageData => dispatch => {

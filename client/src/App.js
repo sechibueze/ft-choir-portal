@@ -11,9 +11,9 @@ import Signup from './components/Auth/Signup';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
 import Members from './components/Members/ShowMembers';
-
 import { loadCurrentMember } from './_actions/authActions';
 import store from './store';
+const NotFound = () => <h1> Not found</h1>
 store.dispatch(loadCurrentMember());
 
 const App = () => {
@@ -25,12 +25,14 @@ const App = () => {
           <Route exact path='/' component={Home} />
           <Route exact path='/access' component={Access} />
           <Route exact path='/forgot-password' component={ForgotPassword} />
-          <Route exact path='/password-reset/:token' component={ResetPassword} />
+          <Route path='/password-reset/:token?' component={ResetPassword} />
+           
           <Route exact path='/login' component={Login} />
           <Route exact path='/signup' component={Signup} />
           <Authenticate exact path='/dashboard' component={Dashboard} />
           <Authenticate exact path='/profile' component={Profile} />
           <Authenticate exact path='/members' component={Members} />
+          <Route component={NotFound} />
         </Switch>
       </Router>
     </Provider>

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Alert from '../Alert';
 import Loader from '../Loader';
 import AuthContainer from '../AuthContainer';
-import { loadMembers, deleteMemberById } from '../../_actions/memberActions';
+import { loadMembers, deleteMemberById, clearMemberProfile } from '../../_actions/memberActions';
 import { toggleAdminAuth, flushAllData  } from '../../_actions/adminActions';
 import { setAlert } from '../../_actions/alertActions';
 import formatDate from '../formatDate';
@@ -20,7 +20,8 @@ const ShowMembers = ({loading, members,
   adminAuth,
   toggleAdminAuth,
   flushData,
-  flushAllData
+  flushAllData,
+  clearMemberProfile
  }) => {
   const [status, setStatus] = useState({
     id: null,
@@ -59,7 +60,7 @@ const ShowMembers = ({loading, members,
       open: false,
       id: null
     }))
-  
+  clearMemberProfile()
   }
 
 
@@ -108,10 +109,11 @@ const ShowMembers = ({loading, members,
                     <td>Delete</td>
                   </tr>
                 </thead>
+                <tbody>
               {
                 members.map((member, idx) => (
                   
-                    <tr>
+                    <tr style={{textAlign: 'left'}}>
                       <td> { ++idx} </td>
                       {/* <td> {member._id} </td> */}
                       <td className="" >
@@ -140,6 +142,7 @@ const ShowMembers = ({loading, members,
                  
                 ))
               }
+              </tbody>
               </table>
               </div>
               <div className="container">
@@ -163,6 +166,7 @@ const ShowMembers = ({loading, members,
  
 ShowMembers.propTypes = {
   loadMembers: PropTypes.func.isRequired,
+  clearMemberProfile: PropTypes.func.isRequired,
   deleteMemberById: PropTypes.func.isRequired,
   toggleAdminAuth: PropTypes.func.isRequired,
   flushAllData: PropTypes.func.isRequired,
@@ -175,6 +179,6 @@ const mapStateToProps = state => ({
   adminAuth: state.admin.adminAuth,
   flushData: state.admin.flushData
 });
-export default connect(mapStateToProps, { setAlert, loadMembers, 
+export default connect(mapStateToProps, { setAlert, loadMembers, clearMemberProfile,
   toggleAdminAuth, deleteMemberById, flushAllData})(ShowMembers);
 
