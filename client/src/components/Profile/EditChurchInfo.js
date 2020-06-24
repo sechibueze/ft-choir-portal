@@ -66,7 +66,6 @@ const EditChurchInfo = ({loading, churchInfo, closeModal, updateChurchInfo, upda
             <label htmlFor="holy_spirit_year">Year of Holy Ghost Baptism</label>
             <input type="date" name="holy_spirit_year" id="holy_spirit_year"  onChange={handleChange}   className="form-control"  />
           </div>
-
           <div className="form-group">
             <label htmlFor="lfc_joined_year">Year joined LFC</label>
             <input type="date" name="lfc_joined_year" onChange={handleChange} className="form-control"  />

@@ -365,9 +365,10 @@ const updateChurchInfo = (req, res) => {
 
 // A member can delete his profile in which case, he can recreate it
 const deleteProfile = (req, res) => {
-  const currentMemberId = req.currentMember.memberId;
+  // const currentMemberId = req.currentMember.memberId;
+  const memberId = req.params.memberId;
 
-  Profile.findOneAndRemove({ member: currentMemberId }, (err, result) => {
+  Profile.findOneAndRemove({ member: memberId }, (err, result) => {
     if (err) {
       return res.status(500).json({
         status: false,
@@ -378,7 +379,7 @@ const deleteProfile = (req, res) => {
     return res.status(200).json({
       status: true,
       message: 'Deleted profile',
-      data: currentMemberId
+      data: memberId
     });
 
   });

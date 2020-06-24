@@ -1,7 +1,8 @@
 export const VOCAL_PARTS = [
   "Alto",
   "Tenor",
-  "Suprano"
+  "Soprano",
+  "Musician"
 ];
 export const STATES =  [
   "Abia",
@@ -293,7 +294,14 @@ export const COUNTRIES = [
 	"Zimbabwe",
 	"Åland Islands"
 ]
-export const REHEARSAL_LOCATION = [ "Iyana Ipaja", "Canaanland", "Isashi"]
+export const REHEARSAL_LOCATION = [ 
+	"Iyana Ishasi 1008", 
+	"Canaan Land", 
+	"Ikoyi",
+	"Oregun",
+	"Festac",
+	"Raji Oba (Caparnaum)"
+]
 export const GROUPS = [
 	"001", "002", "003", "004", "005", "006", "007", "008", "009", "010",
 	"011", "012", "013", "014", "015", "016", "017", "018", "019", "020",
@@ -302,7 +310,7 @@ export const GROUPS = [
 	"041", "042", "043", "044", "045", "046", "047", "048", "049", "050",
 	"051", "052"
 ]
-export const MEMBERSHIP_STATUS = [
+export const SUB_GROUP = [
 	"Music Team", 
 	"Praise Team", 
 	"Medical Team", 
@@ -316,7 +324,8 @@ export const MEMBERSHIP_STATUS = [
 	"Welfare Team",
 	"Marriage Committee",
 	"Prayer Team",
-	"Multimedia Team"
+	"Multimedia Team",
+	"FTC Secretariat/PROTOCOL"
 ]
 export const LEADERSHIP_STATUS = [
 	"Choir Master", 
@@ -324,7 +333,7 @@ export const LEADERSHIP_STATUS = [
 	"Choir Secretary", 
 	"Assistant Choir Secretary", 
 	"Rehearsal Cordinator", 
-	"Musician Head", 
+	"Head of Musician", 
 	"Musician Rehearsal Cordinator", 
 	"Music team Leader",
 	"Praise team Leader",
@@ -333,14 +342,21 @@ export const LEADERSHIP_STATUS = [
 	"Music Teacher",
 	"Group Leader",
 	"Group Secretary",
-	"Committee Chair"
+	"Committee Chair",
+	"Chorister"
 ]
-export const SUB_GROUP = ["Member", "Provider"]
-export const TITLES = ["Mr", "Mrs", "Deacon", "Pastor", "Dr", "Barr", "Hon"]
+export const MEMBERSHIP_STATUS = ["Member", "Ordained member", "Pastorate"]
+export const TITLES = ["Mr", "Mrs", "Deacon", "Deaconess", "Pastor", "Dr", "Barr", "Hon"]
 export const WORK_STATUS = [
 	"Employed",
-	"Unemployed",
+	"Seeking Employment",
 	"Self-eemployed"
+]
+export const WOFBI_STATUS = [
+	"In view",
+	"BCC",
+	"LCC",
+	"LDC"
 ]
 export const WSF_STATUS = [
 	"Chairman (Zonal Council)",

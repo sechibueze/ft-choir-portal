@@ -12,7 +12,7 @@ import {
   LOADED
 } from '../_actions/types';
 
-import { handleResponseErrors } from './alertActions';
+import { handleResponseErrors, setAlert } from './alertActions';
 import { getConfigHeaders } from './authActions';
 
 export const loadMemberProfile = () => dispatch => {
@@ -108,17 +108,16 @@ export const updateMemberProfile = (profileData, update=true) => dispatch => {
 
 // Delete profile
 // DELETE /api/profiles/me
-export const deleteProfile = () => dispatch => {
+export const deleteProfile = (memberId) => dispatch => {
   dispatch({ type: LOADING });
   const configHeaders = getConfigHeaders();
-  axios.delete('/api/profiles/me', configHeaders)
+  axios.delete(`/api/profiles/${ memberId }`, configHeaders)
     .then(({ data }) => {
-      console.log('Data ', data);
       dispatch({ type: DELETE_PROFILE , payload: data.data });
+      dispatch(setAlert("Profile deleted", "DELETE_PROFILE_OK", "success"));
       dispatch({ type: LOADED });
     })
     .catch(err => {
-      console.log('Err ', err)
       dispatch(handleResponseErrors(err, 'PROFILE_DELETE'));
     });
 };

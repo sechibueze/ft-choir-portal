@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { setAlert } from '../../_actions/alertActions';
 import AuthContainer from '../AuthContainer';
 import Loader from '../Loader';
-import { loadMemberProfile, deleteProfile } from '../../_actions/profileActions';
+import { loadMemberProfile } from '../../_actions/profileActions';
 import Modal from '../Modal';
 import CreatePersonalInfo from './CreatePersonalInfo';
 
@@ -32,11 +32,7 @@ const Profile = ({
   updatedChurchInfo,
   updatedNOKInfo,
   updatedUnitInfo,
-  memberImage,
-  deletedProfile,
-  deleteProfile
-
-
+  memberImage
 }) => {
 
   const [profileVisibility, setProfileVisibility] = useState(false);
@@ -56,14 +52,9 @@ const Profile = ({
     updatedChurchInfo,
     updatedNOKInfo,
     updatedUnitInfo,
-    memberImage,
-    deletedProfile
+    memberImage
 ]);
-const handleDeleteProfile = () => {
-  if (window.confirm('Irreversible! Are you sure ?')) {
-    deleteProfile()
-  }
-}
+
   if (loading && !memberProfile) return <Loader title="Fetching profile..."/>
   return ( 
     <Fragment>
@@ -146,11 +137,7 @@ const handleDeleteProfile = () => {
 
         
 
-              <div className="dashboard-action">
-                <span className="btn btn-danger btn-md fa fa-trash" onClick={() => handleDeleteProfile()}>
-                  &nbsp; DELETE MY PROFILE
-                </span>
-              </div>
+              
             </Fragment>
           )
         }
@@ -172,8 +159,7 @@ const mapStateToProps = state => ({
   updatedChurchInfo: state.profiles.updatedChurchInfo,
   updatedNOKInfo: state.profiles.updatedNOKInfo,
   updatedUnitInfo: state.profiles.updatedUnitInfo,
-  deletedProfile: state.profiles.deletedProfile,
   memberImage: state.members.memberImage
 });
-export default connect(mapStateToProps, { setAlert, loadMemberProfile, deleteProfile})(Profile);
+export default connect(mapStateToProps, { setAlert, loadMemberProfile})(Profile);
 

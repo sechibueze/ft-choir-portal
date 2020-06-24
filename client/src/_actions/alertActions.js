@@ -2,11 +2,11 @@ import { v4 } from 'uuid';
 import { SET_ALERT, LOADED, CLEAR_ALERT } from './types';
 
 
-export const setAlert = (alertText, origin = 'AUTH',  timeout = 3000) => dispatch => {
+export const setAlert = (alertText, origin = 'AUTH', type="danger",  timeout = 3000) => dispatch => {
   const alertId = v4();
   dispatch({
     type: SET_ALERT,
-    payload: { alertText, alertId, origin }
+    payload: { alertText, alertId, origin, type }
   });
   dispatch({ type: LOADED})
 
@@ -23,29 +23,52 @@ export const clearAlert = (alertId = null) => dispatch => {
   });
 };
 
-export const handleResponseErrors = (err, origin = 'AUTH') => dispatch => {
-  console.log('err', err.toString())
-  if (err.response && err.response.status === 422) {
-    err.response.data.errors.map(e => (
-      dispatch({
-        type: SET_ALERT,
-        payload: {
-          alertId: v4(),
-          alertText: e,
-          origin: origin
-        }
-      })
-    ))
-  }
+export const handleResponseErrors = (err, origin = 'AUTH', type = "danger") => dispatch => {
+  if (err.response) {
+      if (err.response.status === 422) {
+        err.response.data.errors.map(e => (
+          dispatch({
+            type: SET_ALERT,
+            payload: {
+              alertId: v4(),
+              alertText: e,
+              origin, 
+              type
+            }
+          })
+        ))
+      } else {
+        dispatch({
+          type: SET_ALERT,
+          payload: {
+            alertId: v4(),
+            alertText: typeof err.response.data === 'object' ? err.response.data.error : err.response.data,
+            origin,
+            type
+          }
+        })
 
-  if (err.response && err.response.status !== 422 && err.response.data) {
-    dispatch({
-      type: SET_ALERT,
-      payload: {
-        alertId: v4(),
-        alertText: err.response.data.error,
-        origin
       }
-    })
-  }
+    } else if ( err.request) {
+      dispatch({
+            type: SET_ALERT,
+            payload: {
+              alertId: v4(),
+              alertText: err.request.responseText,
+              origin, 
+              type
+            }
+          })      
+    }else{
+      
+      dispatch({
+            type: SET_ALERT,
+            payload: {
+              alertId: v4(),
+              alertText: err.message || err.toString(),
+              origin, 
+              type
+            }
+          })
+    }   
 };

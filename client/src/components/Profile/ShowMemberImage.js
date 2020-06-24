@@ -7,13 +7,7 @@ const ShowMemberImage = ({ imageUrl}) => {
         <img 
           src={imageUrl} 
           alt='member view' 
-          className=''
-          style={{ width: '100px', 
-            height: '100px', 
-            margin: 'auto',
-            textAlign: 'center',
-            display: 'block'
-          }}
+          className='profile-image'         
         />
       }
     </Fragment>

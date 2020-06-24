@@ -254,4 +254,15 @@
     }
   }
 }
+
+.profile-image{
+  width: 12rem;
+  height: 12rem;
+  margin: .75rem auto;
+  text-align: center;
+  display: block;
+  border: 2px solid #333;
+  border-radius: 50%;
+  box-shadow: 0 2px 3px #ddd;
+}
 @import 'mobile.scss';

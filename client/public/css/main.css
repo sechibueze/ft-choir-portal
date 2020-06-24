@@ -829,6 +829,17 @@ table.table tbody td {
   margin-right: 2.75rem;
 }
 
+.profile-image {
+  width: 12rem;
+  height: 12rem;
+  margin: 0.75rem auto;
+  text-align: center;
+  display: block;
+  border: 2px solid #333;
+  border-radius: 50%;
+  box-shadow: 0 2px 3px #ddd;
+}
+
 @media (max-width: 520px) {
   .container {
     width: 90%;

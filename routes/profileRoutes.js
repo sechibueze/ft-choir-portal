@@ -1,6 +1,7 @@
 const express = require('express');
 const { check } = require('express-validator');
 const checkMember = require('../middlewares/checkMember');
+const checkAdmin = require('../middlewares/checkAdmin');
 const router = express.Router();
 const { getAllProfiles, getProfileById,
    createProfile, 
@@ -68,10 +69,10 @@ router.put('/unitinfo', checkMember, updateUnitInfo);
 router.put('/churchinfo', checkMember, updateChurchInfo);
 
 /**
- * @route DELETE /api/profiles/me
- * @desc Delete my profile
+ * @route DELETE /api/profiles/:memberId
+ * @desc Delete user profile
  * @access private ..member
  */
-router.delete('/me', checkMember,  deleteProfile);
+router.delete('/:memberId', checkMember, checkAdmin,  deleteProfile);
 
 module.exports = router;

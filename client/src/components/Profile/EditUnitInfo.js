@@ -28,7 +28,6 @@ const EditUnitInfo = ({ unitInfo, closeModal, setAlert, updateUnitInfo, updatedU
   }
    const updateData = e => {
     e.preventDefault();
-    console.log('data to update, personal', data)
     updateUnitInfo(data)
   }
   // const {group, rehearsal_location, vocal_part, membership_status, leadership_status, sub_group } = data;
@@ -65,7 +64,7 @@ const EditUnitInfo = ({ unitInfo, closeModal, setAlert, updateUnitInfo, updatedU
           </div>
 
           <div className="form-group">
-            <label htmlFor="vocal_part">Vocal Part </label>
+            <label htmlFor="vocal_part">Part </label>
             <select name="vocal_part"  onChange={handleChange} id="vocal_part" className="form-control" >
               {
                 VOCAL_PARTS.map((part, idx) => (

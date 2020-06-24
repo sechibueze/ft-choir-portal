@@ -7,7 +7,7 @@ const Navbar = () => {
     <div className="container clearfix">
       <input type="checkbox" id="menu-toggler-control" />
       <Link className="logo" to="/">
-        <img src="./img/ftc-logo.png" className="logo-icon fa-connectdevelop fa-2x" />
+        <img src="/img/ftc-logo.png" className="logo-icon fa-connectdevelop fa-2x" />
         <div className="logo-name">FTC Portal</div>
       </Link>
       <label htmlFor="menu-toggler-control" className="menu-toggler fa fa-bars fa-2x"></label>

@@ -17,7 +17,7 @@ const ShowUnitInfo = ({ unitInfo }) => {
                 <article className="data-value"> { rehearsal_location && rehearsal_location } </article>
               </div> 
               <div className="data-field">
-               <strong className="data-key"> Vocal Part </strong>
+               <strong className="data-key"> Part </strong>
                 <article className="data-value"> { vocal_part && vocal_part } </article>
               </div> 
               <div className="data-field">
