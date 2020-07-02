@@ -28,7 +28,16 @@ export const UPDATE_CHURCH_INFO = 'UPDATE_CHURCH_INFO';
 export const UPDATE_NOK_INFO = 'UPDATE_NOK_INFO';
 export const DELETE_PROFILE = 'DELETE_PROFILE';
 
-// export const DELETE_CURRENT_MEMBER_PROFILE = 'DELETE_CURRENT_MEMBER_PROFILE';
+// Posts
+export const GET_ALL_POSTS = 'GET_ALL_POSTS';
+export const SET_POST_BY_POST_ID = 'SET_POST_BY_POST_ID';
+export const NEW_POST_CREATED = 'NEW_POST_CREATED';
+export const POST_DELETED = 'POST_DELETED';
+export const LIKE_POST = 'LIKE_POST';
+export const UNLIKE_POST = 'UNLIKE_POST';
+export const ADD_COMMENT_TO_POST = 'ADD_COMMENT_TO_POST';
+export const REMOVE_POST_COMMENT = 'REMOVE_POST_COMMENT';
+
 
 // Admin
 export const LOAD_MEMBERS = 'LOAD_MEMBERS';
@@ -40,4 +49,6 @@ export const BECOME_ADMIN = 'BECOME_ADMIN';
 export const TOGGLE_ADMIN_AUTH = 'TOGGLE_ADMIN_AUTH';
 export const DELETE_MEMBER = 'DELETE_MEMBER';
 export const FLUSH_DATA = 'FLUSH_DATA';
+
+
 

@@ -71,4 +71,6 @@ export const handleResponseErrors = (err, origin = 'AUTH', type = "danger") => d
             }
           })
     }   
+    dispatch({type: LOADED })
+    
 };

@@ -20,12 +20,12 @@ export const loadMemberProfile = () => dispatch => {
   const configHeaders = getConfigHeaders();
   axios.get('/api/profiles/me', configHeaders)
     .then(({ data }) => {
-      console.log('Currently logged in member profile ', data)
+      // console.log('Currently logged in member profile ', data)
       dispatch({ type: LOAD_MEMBER_PROFILE, payload: data.data });
       dispatch({ type: LOADED });
     })
     .catch(err => {
-      console.log('Error in loading currently logged in member profile ', err)
+      // console.log('Error in loading currently logged in member profile ', err)
       dispatch(handleResponseErrors(err, 'PROFILE'));
     });
 };

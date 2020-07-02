@@ -4,9 +4,14 @@ import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 const AuthSidebar = ({ currentMember }) => {
   const adminLinks = (
-      <li className="sidebar-linkitem">
-        <Link to='/members'><span className="fa fa-users" />Members</Link>
-      </li>
+      <Fragment>
+        <li className="sidebar-linkitem">
+          <Link to='/members'><span className="fa fa-users" />Members</Link>
+        </li>
+        <li className="sidebar-linkitem">
+          <Link to='/post-admin'><span className="fa fa-edit" />Post Admin</Link>
+        </li>
+      </Fragment>
   );
   return (
     <Fragment>
@@ -31,12 +36,12 @@ const AuthSidebar = ({ currentMember }) => {
           <li className="sidebar-linkitem">
             <Link to='/profile'><span className="fa fa-user" />Profiles</Link>
           </li>
+          <li className="sidebar-linkitem">
+            <Link to='/posts'><span className="fa fa-microphone" />Information</Link>
+          </li>
           {
             currentMember.auth.includes('admin') ? adminLinks : null
-          }
-         
-         
-          
+          }          
         </ul>
       </div>
     </Fragment>

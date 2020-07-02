@@ -17,6 +17,7 @@ app.use((req, res, next) => {
 const groupRoutes = require('./routes/groupRoutes');
 const memberRoutes = require('./routes/memberRoutes');
 const profileRoutes = require('./routes/profileRoutes');
+const postRoutes = require('./routes/postRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const accessTokenRoutes = require('./routes/accessTokenRoutes');
 
@@ -24,6 +25,7 @@ app.use('/api/groups', groupRoutes);
 app.use('/api/access', accessTokenRoutes);
 app.use('/api/members', memberRoutes);
 app.use('/api/profiles', profileRoutes);
+app.use('/api/posts', postRoutes);
 app.use('/api/reports', reportRoutes);
 
 

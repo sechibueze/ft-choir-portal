@@ -10,10 +10,13 @@ import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
+import PostAdmin from './components/Posts/PostAdmin';
+import PostPage from './components/Posts/PostPage';
 import Members from './components/Members/ShowMembers';
+import NotFound from './components/NotFound';
+
 import { loadCurrentMember } from './_actions/authActions';
 import store from './store';
-const NotFound = () => <h1> Not found</h1>
 store.dispatch(loadCurrentMember());
 
 const App = () => {
@@ -32,6 +35,8 @@ const App = () => {
           <Authenticate exact path='/dashboard' component={Dashboard} />
           <Authenticate exact path='/profile' component={Profile} />
           <Authenticate exact path='/members' component={Members} />
+          <Authenticate exact path='/posts' component={PostPage} />
+          <Authenticate exact path='/post-admin' component={PostAdmin} />
           <Route component={NotFound} />
         </Switch>
       </Router>

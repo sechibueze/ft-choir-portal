@@ -4,22 +4,26 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Loader from '../Loader';
 import AuthContainer from '../AuthContainer';
+import PostFeeds from '../Posts/PostFeeds';
+import ShowMemberImage from '../Profile/ShowMemberImage';
 // import { loadCurrentMember } from '../../_actions/authActions';
 
 const Dashboard = ({loading,  currentMember }) => {
   // 
   if(!currentMember) return <Loader />
-  const { firstname
-    // ,lastname, email, imageUrl 
+  const { firstname, imageUrl ,lastname, // email, 
   } = currentMember;
   return ( 
     <Fragment>
       <AuthContainer>
         <div className="">
-            <h2 className="text-primary fa fa-user"> 
-              &nbsp; { `Welcome ${firstname}`}
+          <ShowMemberImage imageUrl={imageUrl} />
+            <h2 className="text-primary" style={{textAlign: 'center', display: 'block', margin: 'auto'}}> 
+              &nbsp; { `Welcome ${firstname} ${lastname}`}
             </h2>
         </div>
+
+        <PostFeeds />
      
        
       </AuthContainer>   
