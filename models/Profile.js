@@ -8,34 +8,14 @@ const ProfileSchema = new Schema({
     ref: 'Member',
     required: true
   },
-  title: {
+    title: {
     type: String,
     default: ""
   },
-  access: {
-    type: String,
-    required: true
-  },
-  group: {
-    type: Schema.Types.ObjectId,
-    ref: 'Group',
-    required: true
-  },
-  general: {
-    vocal_part: {
+   gender: {
       type: String,
       default: ""
     },
-    rehearsal_location: {
-      type: String,
-      default: ""
-    },
-    gender: {
-      type: String,
-      default: ""
-    }
-  },
-  personal: {
     phone: {
       type: String,
       default: ""
@@ -52,10 +32,10 @@ const ProfileSchema = new Schema({
       type: String, default: ""
     },
     dob: {
-      type: Date, default: ""
+      type: String, default: ""
     },
     wed_date: {
-      type: Date, default: ""
+      type: String, default: ""
     },
     marital_status: {
       type: String,
@@ -84,8 +64,7 @@ const ProfileSchema = new Schema({
     nationality: {
       type: String,
       default: 'Nigeria'
-    }
-  },
+    },
   nok: {
     nok_name: {
       type: String,
@@ -112,7 +91,19 @@ const ProfileSchema = new Schema({
       default: ""
     }
   },
-  choir_roles: {
+  unit_info: {
+    group: {
+    type: String,
+    default: ''
+  },
+    vocal_part: {
+      type: String,
+      default: ""
+    },
+    rehearsal_location: {
+      type: String,
+      default: ""
+    },
     membership_status: {
       type: String,
       default: ""
@@ -132,19 +123,19 @@ const ProfileSchema = new Schema({
       default: ""
     },
     new_birth_year: {
-      type: Date,
+      type: String,
       default: ""
     },
     holy_spirit_year: {
-      type: Date,
+      type: String,
       default: ""
     },
     lfc_joined_year: {
-      type: Date,
-      default: Date.now
+      type: String,
+      default: ""
     },
     ordination_year: {
-      type: Date,
+      type: String,
       default: ""
     },
     province: {

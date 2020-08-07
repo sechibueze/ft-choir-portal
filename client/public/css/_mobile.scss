@@ -1,0 +1,31 @@
+@media (max-width: 480px){
+  
+}
+
+@media (max-width: 520px){
+  .container{
+    width: 90%;
+  }
+}
+
+@media (max-width: 760px){
+  .navbar{
+    .menu-toggler{
+      display: block;
+      float: right;
+      line-height: 1.5;
+    }
+
+    .navlinks{
+      display: none;   
+    }
+    #menu-toggler-control:checked ~ .navlinks{
+      display: block;
+      width: 100%;
+      .navlink-item{
+        display: block;
+        line-height: 2.5;
+      }
+    }
+  }
+}
