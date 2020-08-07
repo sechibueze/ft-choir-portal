@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Alert from '../Alert';
 import { updateMemberProfile } from '../../_actions/profileActions'
 import { setAlert } from '../../_actions/alertActions';
-import { WORK_STATUS, MARITAL_STATUS, TITLES, STATES, COUNTRIES } from '../constants';
+import { WORK_STATUS, MARITAL_STATUS, TITLES, STATES, COUNTRIES, PHONE_NUMBER_PATTERN, TEXT_ONLY_PATTERN } from '../constants';
 
 const CreatePersonalInfo = ({ closeModal, setAlert, newProfile, updateMemberProfile}) => {
 
@@ -72,13 +72,13 @@ const CreatePersonalInfo = ({ closeModal, setAlert, newProfile, updateMemberProf
           </div>
           <div className="form-group">
             <label htmlFor="phone">Telephone number</label>
-            <input type="tel" name="phone" value={phone} onChange={handleChange} id="phone" pattern="[0-9]{1,11}" className="form-control"
+            <input type="tel" pattern={PHONE_NUMBER_PATTERN} name="phone" value={phone} onChange={handleChange} id="phone" pattern="[0-9]{1,11}" className="form-control"
                />
           </div>
 
           <div className="form-group">
             <label htmlFor="whatsapp_phone">Whatsapp phone</label>
-            <input type="tel" name="whatsapp_phone" value={whatsapp_phone}  onChange={handleChange}  id="whatsapp_phone" className="form-control"
+            <input type="tel" pattern={PHONE_NUMBER_PATTERN} name="whatsapp_phone" value={whatsapp_phone}  onChange={handleChange}  id="whatsapp_phone" className="form-control"
               />
           </div>
 
@@ -129,7 +129,7 @@ const CreatePersonalInfo = ({ closeModal, setAlert, newProfile, updateMemberProf
 
           <div className="form-group">
             <label for="profession">Profession</label>
-            <input type="text" name="profession" value={profession}  onChange={handleChange}   id="profession" className="form-control" 
+            <input type="text" pattern={TEXT_ONLY_PATTERN} name="profession" value={profession}  onChange={handleChange}   id="profession" className="form-control" 
                />
           
           </div>
@@ -138,6 +138,7 @@ const CreatePersonalInfo = ({ closeModal, setAlert, newProfile, updateMemberProf
             <label htmlFor="employer_name">Name of your employer</label>
             <input 
               type="text" 
+              pattern={TEXT_ONLY_PATTERN}
               name="employer_name"  
               value={employer_name}
                onChange={handleChange}  

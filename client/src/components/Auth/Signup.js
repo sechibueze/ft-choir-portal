@@ -41,21 +41,7 @@ const Signup = ({loading, isAuthenticated, setAlert, registerMember}) => {
           </h1>
           <sup>*</sup> &nbsp;&nbsp; Required
           <Alert origin='SIGNUP' />
-          {/* <div class="form-group">
-            <label htmlFor="group">Group<sup>*</sup></label>
-            <select name="group" onChange={handleChange} id="group" required class="form-control">
-              <option value="" selected>--Select your group</option>
-              {
-                [1,2,3,4,5,6,7].map(group => (
-                  <option value={formatGroupNumber(group)} key={group}> Group - {group} </option>
-                ))
-              }
-            </select>
-          </div> */}
-          {/* <div className="form-group">
-            <label htmlFor="access">Access Token<sup>*</sup></label>
-            <input type="text" name="access" onChange={handleChange} value={access} id="access" className="form-control" placeholder="Enter your access token" required />
-          </div> */}
+
           <div className="form-group">
             <label htmlFor="firstname">Firstname<sup>*</sup></label>
             <input type="text" name="firstname" pattern="[A-Za-z]{1,32}" onChange={handleChange} value={firstname} id="firstname" className="form-control" placeholder="Kevin" required />

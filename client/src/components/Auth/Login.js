@@ -15,8 +15,7 @@ const Login = ({ loading, isAuthenticated, loginMember, setAlert }) => {
     setMemberLogin(prev => ({...prev, [target.name]: target.value}));
   }
   const handleMemberLogin = e => {
-    e.preventDefault()
-    console.log('Access token', memberLogin);
+    e.preventDefault();
     loginMember(memberLogin);
   }
   const { email, password } = memberLogin;

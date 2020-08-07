@@ -1,10 +1,10 @@
 import React, { Fragment, useState, useEffect} from 'react';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
-
 import Alert from '../Alert';
 import { updateNOKInfo } from '../../_actions/profileActions'
 import { setAlert } from '../../_actions/alertActions';
+import { TEXT_ONLY_PATTERN, PHONE_NUMBER_PATTERN } from '../constants';
 
 const EditNOK = ({ nok, closeModal, setAlert, updatedNOKInfo, updateNOKInfo}) => {
 
@@ -30,7 +30,6 @@ const EditNOK = ({ nok, closeModal, setAlert, updatedNOKInfo, updateNOKInfo}) =>
   }
    const updateData = e => {
     e.preventDefault();
-    console.log('data to update, personal', data)
     updateNOKInfo(data)
   }
   const {nok_name, nok_phone, nok_email, nok_address, nok_occupation } = data;
@@ -48,7 +47,7 @@ const EditNOK = ({ nok, closeModal, setAlert, updatedNOKInfo, updateNOKInfo}) =>
           <Alert origin='NOK_INFO_UPDATE' />
           <div className="form-group">
             <label htmlFor="nok_name"> Name of next of kins</label>
-            <input type="text" name="nok_name" onChange={handleChange} value={nok_name} id="nok_name" className="form-control"  />
+            <input type="text" pattern={TEXT_ONLY_PATTERN} name="nok_name" onChange={handleChange} value={nok_name} id="nok_name" className="form-control"  />
           </div>
 
           <div className="form-group">
@@ -59,12 +58,12 @@ const EditNOK = ({ nok, closeModal, setAlert, updatedNOKInfo, updateNOKInfo}) =>
 
           <div className="form-group">
             <label htmlFor="nok_phone">Phone number of next of kins</label>
-            <input type="tel" name="nok_phone" value={nok_phone}  onChange={handleChange}  id="nok_phone" className="form-control"  />
+            <input type="tel" pattern={PHONE_NUMBER_PATTERN} name="nok_phone" value={nok_phone}  onChange={handleChange}  id="nok_phone" className="form-control"  />
           </div>
 
           <div className="form-group">
             <label htmlFor="occupation">Occupation of next of kins</label>
-            <input type="text" name="nok_occupation" value={nok_occupation}  onChange={handleChange}  id="occupation" className="form-control" 
+            <input type="text" pattern={TEXT_ONLY_PATTERN} name="nok_occupation" value={nok_occupation}  onChange={handleChange}  id="occupation" className="form-control" 
                />
           </div>
 

@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect} from 'react';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import Alert from '../Alert';
-import { WORK_STATUS, MARITAL_STATUS, TITLES, STATES, COUNTRIES } from '../constants';
+import { WORK_STATUS, MARITAL_STATUS, TITLES, STATES, COUNTRIES, TEXT_ONLY_PATTERN, PHONE_NUMBER_PATTERN } from '../constants';
 import { updateMemberProfile } from '../../_actions/profileActions'
 import { setAlert } from '../../_actions/alertActions';
 
@@ -37,7 +37,6 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
   }
    const updateData = e => {
     e.preventDefault();
-    console.log('data to update, personal', data)
     updateMemberProfile(data)
   }
   const { 
@@ -76,20 +75,19 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
           </div>
           <div className="form-group">
             <label htmlFor="phone">Telephone number</label>
-            <input type="tel" name="phone" value={phone} onChange={handleChange} id="phone" pattern="[0-9]{1,11}" className="form-control"
+            <input type="tel" pattern={PHONE_NUMBER_PATTERN} name="phone" value={phone} onChange={handleChange} id="phone" pattern="[0-9]{1,11}" className="form-control"
                />
           </div>
 
           <div className="form-group">
             <label htmlFor="whatsapp_phone">Whatsapp phone</label>
-            <input type="tel" name="whatsapp_phone" value={whatsapp_phone}  onChange={handleChange}  id="whatsapp_phone" className="form-control"
+            <input type="tel" pattern={PHONE_NUMBER_PATTERN} name="whatsapp_phone" value={whatsapp_phone}  onChange={handleChange}  id="whatsapp_phone" className="form-control"
               />
           </div>
 
           <div className="form-group">
             <label htmlFor="contact_address">Contact address</label>
             <input type="text" name="contact_address" value={contact_address}  onChange={handleChange}  id="contact_address" className="form-control"/>
-
           </div>
 
           <div className="form-group">
@@ -138,7 +136,7 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
 
           <div className="form-group">
             <label for="profession">Profession</label>
-            <input type="text" name="profession" value={profession}  onChange={handleChange}   id="profession" className="form-control" 
+            <input type="text" pattern={TEXT_ONLY_PATTERN} name="profession" value={profession}  onChange={handleChange}   id="profession" className="form-control" 
                />
           
           </div>
@@ -147,6 +145,7 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
             <label htmlFor="employer_name">Name of your employer</label>
             <input 
               type="text" 
+              pattern={TEXT_ONLY_PATTERN}
               name="employer_name"  
               value={employer_name}
                onChange={handleChange}  

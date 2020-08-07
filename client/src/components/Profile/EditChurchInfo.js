@@ -30,11 +30,9 @@ const EditChurchInfo = ({loading, churchInfo, closeModal, updateChurchInfo, upda
   }
    const updateData = e => {
     e.preventDefault();
-    console.log('data to update, personal', data)
     updateChurchInfo(data)
   }
- 
-         
+          
   const { wsf_status, province, district, zone } = data;
  
   return ( 

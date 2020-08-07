@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { updateAuthData } from '../../_actions/profileActions';
 import { setAlert } from '../../_actions/alertActions';
 import Alert from '../Alert';
+import { TEXT_ONLY_PATTERN} from '../constants';
 
 const EditAuthData = ({loading, authData, closeModal, setAlert, updateAuthData, updatedAuthData }) => {
   const [data, setData] = useState({
@@ -41,16 +42,16 @@ const EditAuthData = ({loading, authData, closeModal, setAlert, updateAuthData, 
          <Alert origin='AUTH_DATA_UPDATE' />
           <div className="form-group">
             <label htmlFor="firstname">Firstname</label>
-            <input type="text" value={firstname} onChange={handleChange} name="firstname" id="firstname"  className="form-control"  />
+            <input type="text" pattern={TEXT_ONLY_PATTERN} value={firstname} onChange={handleChange} name="firstname" id="firstname"  className="form-control"  />
           </div>
           <div className="form-group">
             <label htmlFor="middlename">Middlename</label>
-            <input type="text" name="middlename" value={middlename} onChange={handleChange}  id="middlename" className="form-control"
+            <input type="text" pattern={TEXT_ONLY_PATTERN} name="middlename" value={middlename} onChange={handleChange}  id="middlename" className="form-control"
                />
           </div>
           <div className="form-group">
             <label htmlFor="lastname">Lastname </label>
-            <input type="text" name="lastname" value={lastname} onChange={handleChange}  id="lastname"  className="form-control"  />
+            <input type="text" pattern={TEXT_ONLY_PATTERN} name="lastname" value={lastname} onChange={handleChange}  id="lastname"  className="form-control"  />
           </div>
 
           <div className="form-group">

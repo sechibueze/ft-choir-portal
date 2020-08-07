@@ -49,7 +49,7 @@ export const becomeAdmin = (access) => dispatch => {
     .then(({ data }) => {
       console.log('Loaded admin auth ', data)
       dispatch({ type: BECOME_ADMIN, payload: data.data });
-      dispatch(setAlert(data.message, 'BECOME_ADMIN'));
+      dispatch(setAlert('User Authorization updated', 'BECOME_ADMIN'));
       dispatch({ type: LOADED });
     })
     .catch(err => {

@@ -1,3 +1,5 @@
+export const PHONE_NUMBER_PATTERN = "^[0-9]+$";
+export const TEXT_ONLY_PATTERN = "[A-Za-z]{1,32}";
 export const VOCAL_PARTS = [
   "Alto",
   "Tenor",

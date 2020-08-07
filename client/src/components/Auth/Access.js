@@ -12,7 +12,6 @@ const Access = ({ becomeAdmin }) => {
   }
   const handleAccessRequest = e => {
     e.preventDefault()
-    console.log('Access token', access )
     becomeAdmin(access)
   }
  const { email } = access;
