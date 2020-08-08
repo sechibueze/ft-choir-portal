@@ -1,12 +1,14 @@
 import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import Navbar from '../Navbar';
 import Alert from '../Alert';
 import { resetMemberPassword } from '../../_actions/memberActions';
 
 const ResetPassword = ({
    match,
+   history,
    resetMemberPassword,
    passwordReset
   }) => {
@@ -22,7 +24,7 @@ const ResetPassword = ({
   }
   const handleResetPassword = e => {
     e.preventDefault();
-    resetMemberPassword(data);
+    resetMemberPassword(data, history);
   }
   const { password } = data;
   return (
@@ -52,5 +54,5 @@ const mapStateToProps = state => ({
   loading: state.auth.loading,
   passwordReset: state.members.passwordReset
 });
-export default connect(mapStateToProps, { resetMemberPassword })(ResetPassword);
+export default connect(mapStateToProps, { resetMemberPassword })(withRouter(ResetPassword));
  

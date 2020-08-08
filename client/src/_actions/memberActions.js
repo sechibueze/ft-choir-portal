@@ -70,9 +70,9 @@ export const sendPasswordResetToken = data => dispatch => {
   // localhost:5000/api/members/forgotpassword
   axios.put(`/api/members/forgotpassword`, data,  configHeaders)
     .then(({ data }) => {
-      console.log('Loaded members ', data)
+      // console.log('Loaded members ', data)
       dispatch({ type: SEND_PASSWORD_RESET_TOKEN, payload: data });
-      dispatch(setAlert(data.message, SEND_PASSWORD_RESET_TOKEN))
+      dispatch(setAlert(data.message, SEND_PASSWORD_RESET_TOKEN, 'danger', 40000))
       dispatch({ type: LOADED });
     })
     .catch(err => {
@@ -83,7 +83,7 @@ export const sendPasswordResetToken = data => dispatch => {
 
 
 
-export const resetMemberPassword = data => dispatch => {
+export const resetMemberPassword = (data, history = '') => dispatch => {
   dispatch({ type: LOADING });
   const configHeaders = getConfigHeaders();
   // localhost:5000/api/members/forgotpassword
@@ -91,8 +91,12 @@ export const resetMemberPassword = data => dispatch => {
     .then(({ data }) => {
       console.log('Loaded members ', data)
       dispatch({ type: RESET_MEMBER_PASSWORD, payload: data });
-      dispatch(setAlert(data.message, RESET_MEMBER_PASSWORD))
+      dispatch(setAlert(data.message, RESET_MEMBER_PASSWORD, 'danger', 40000))
       dispatch({ type: LOADED });
+
+      if (history) {
+        history.push('/login')
+      }
     })
     .catch(err => {
       console.log('Error iin loading members', err)

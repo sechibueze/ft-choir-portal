@@ -30,6 +30,7 @@ const Login = ({ loading, isAuthenticated, loginMember, setAlert }) => {
           </h1>
           <sup>*</sup> &nbsp;&nbsp; Required
            <Alert origin='LOGIN' />
+           <Alert origin='RESET_MEMBER_PASSWORD' />
 
           <div className="form-group">
             <label htmlFor="email">Email<sup>*</sup></label>
