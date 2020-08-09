@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Alert from '../Alert';
 import { updateMemberProfile } from '../../_actions/profileActions'
 import { setAlert } from '../../_actions/alertActions';
-import { WORK_STATUS, MARITAL_STATUS, TITLES, STATES, COUNTRIES, PHONE_NUMBER_PATTERN, TEXT_ONLY_PATTERN } from '../constants';
+import { WORK_STATUS, MARITAL_STATUS, TITLES, STATES, COUNTRIES, PHONE_NUMBER_PATTERN, TEXT_ONLY_PATTERN, TEXT_WITH_SPACE } from '../constants';
 
 const CreatePersonalInfo = ({ closeModal, setAlert, newProfile, updateMemberProfile}) => {
 
@@ -129,7 +129,7 @@ const CreatePersonalInfo = ({ closeModal, setAlert, newProfile, updateMemberProf
 
           <div className="form-group">
             <label for="profession">Profession</label>
-            <input type="text" pattern={TEXT_ONLY_PATTERN} name="profession" value={profession}  onChange={handleChange}   id="profession" className="form-control" 
+            <input type="text" pattern={TEXT_WITH_SPACE} name="profession" value={profession}  onChange={handleChange}   id="profession" className="form-control" 
                />
           
           </div>
@@ -138,7 +138,7 @@ const CreatePersonalInfo = ({ closeModal, setAlert, newProfile, updateMemberProf
             <label htmlFor="employer_name">Name of your employer</label>
             <input 
               type="text" 
-              pattern={TEXT_ONLY_PATTERN}
+              pattern={TEXT_WITH_SPACE}
               name="employer_name"  
               value={employer_name}
                onChange={handleChange}  
