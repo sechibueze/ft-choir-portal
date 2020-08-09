@@ -147,7 +147,7 @@ const getCurrentMemberProfile = (req, res) => {
 const createProfile = (req, res) => {
 
   const member = req.currentMember.memberId;
-
+  // console.log('gender ', req.body.gender)
   const {
     title,
     gender,
@@ -187,7 +187,7 @@ const createProfile = (req, res) => {
     // If profile, update else create
     Profile.findOneAndUpdate({ member }, profile, {upsert: true, new: true})
       .then(profile => {
-        
+        // console.log('Updated ', profile)
         return res.status(200).json({
           status: true,
           message: 'Created/Updated profile',

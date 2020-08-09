@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect} from 'react';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import Alert from '../Alert';
-import { WORK_STATUS, MARITAL_STATUS, TITLES, STATES, COUNTRIES, TEXT_ONLY_PATTERN, PHONE_NUMBER_PATTERN } from '../constants';
+import { WORK_STATUS, MARITAL_STATUS, TITLES, STATES, COUNTRIES, TEXT_ONLY_PATTERN, TEXT_WITH_SPACE, PHONE_NUMBER_PATTERN } from '../constants';
 import { updateMemberProfile } from '../../_actions/profileActions'
 import { setAlert } from '../../_actions/alertActions';
 
@@ -136,7 +136,7 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
 
           <div className="form-group">
             <label for="profession">Profession</label>
-            <input type="text" pattern={TEXT_ONLY_PATTERN} name="profession" value={profession}  onChange={handleChange}   id="profession" className="form-control" 
+            <input type="text" pattern={TEXT_WITH_SPACE} name="profession" value={profession}  onChange={handleChange}   id="profession" className="form-control" 
                />
           
           </div>
@@ -145,7 +145,7 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
             <label htmlFor="employer_name">Name of your employer</label>
             <input 
               type="text" 
-              pattern={TEXT_ONLY_PATTERN}
+              pattern={TEXT_WITH_SPACE}
               name="employer_name"  
               value={employer_name}
                onChange={handleChange}  

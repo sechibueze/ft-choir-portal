@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Alert from '../Alert';
 import { updateNOKInfo } from '../../_actions/profileActions'
 import { setAlert } from '../../_actions/alertActions';
-import { TEXT_ONLY_PATTERN, PHONE_NUMBER_PATTERN } from '../constants';
+import { TEXT_ONLY_PATTERN, PHONE_NUMBER_PATTERN, TEXT_WITH_SPACE } from '../constants';
 
 const EditNOK = ({ nok, closeModal, setAlert, updatedNOKInfo, updateNOKInfo}) => {
 
@@ -47,7 +47,7 @@ const EditNOK = ({ nok, closeModal, setAlert, updatedNOKInfo, updateNOKInfo}) =>
           <Alert origin='NOK_INFO_UPDATE' />
           <div className="form-group">
             <label htmlFor="nok_name"> Name of next of kins</label>
-            <input type="text" pattern={TEXT_ONLY_PATTERN} name="nok_name" onChange={handleChange} value={nok_name} id="nok_name" className="form-control"  />
+            <input type="text" pattern={TEXT_WITH_SPACE} name="nok_name" onChange={handleChange} value={nok_name} id="nok_name" className="form-control"  />
           </div>
 
           <div className="form-group">
@@ -63,7 +63,7 @@ const EditNOK = ({ nok, closeModal, setAlert, updatedNOKInfo, updateNOKInfo}) =>
 
           <div className="form-group">
             <label htmlFor="occupation">Occupation of next of kins</label>
-            <input type="text" pattern={TEXT_ONLY_PATTERN} name="nok_occupation" value={nok_occupation}  onChange={handleChange}  id="occupation" className="form-control" 
+            <input type="text" pattern={TEXT_WITH_SPACE} name="nok_occupation" value={nok_occupation}  onChange={handleChange}  id="occupation" className="form-control" 
                />
           </div>
 

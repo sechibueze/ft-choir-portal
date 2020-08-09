@@ -96,7 +96,7 @@ export const updateMemberProfile = (profileData, update=true) => dispatch => {
   const configHeaders = getConfigHeaders();
   axios.post('/api/profiles', profileData, configHeaders)
     .then(({ data }) => {
-      console.log('Data ', data)
+      // console.log('updateMemberProfile Data ', data)
       dispatch({ type: update ?  UPDATE_MEMBER_PROFILE : CREATE_MEMBER_PROFILE , payload: data.data });
       dispatch({ type: LOADED });
     })
