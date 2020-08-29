@@ -1,4 +1,4 @@
-export const PHONE_NUMBER_PATTERN = "^[0-9]+$";
+export const PHONE_NUMBER_PATTERN = '^[+]{0,1}[0-9]{10,13}$';
 export const TEXT_ONLY_PATTERN = "[A-Za-z]{1,32}";
 export const TEXT_WITH_SPACE = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
 export const VOCAL_PARTS = [
@@ -349,7 +349,7 @@ export const LEADERSHIP_STATUS = [
 	"Chorister"
 ]
 export const MEMBERSHIP_STATUS = ["Member", "Ordained member", "Pastorate"]
-export const TITLES = ["Mr", "Mrs", "Deacon", "Deaconess", "Pastor", "Dr", "Barr", "Hon"]
+export const TITLES = ["Mr", "Miss", "Mrs", "Deacon", "Deaconess", "Pastor", "Dr", "Barr", "Hon"]
 export const WORK_STATUS = [
 	"Employed",
 	"Seeking Employment",

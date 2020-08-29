@@ -63,7 +63,7 @@ const ProfileSchema = new Schema({
     },
     nationality: {
       type: String,
-      default: 'Nigeria'
+      default: ''
     },
   nok: {
     nok_name: {
