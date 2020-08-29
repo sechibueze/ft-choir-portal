@@ -7,7 +7,7 @@ import { updateMemberProfile } from '../../_actions/profileActions'
 import { setAlert } from '../../_actions/alertActions';
 
 const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile, updatedMemberProfile}) => {
-  // console.log('state ', STATES)
+  // console.log('natioanity ', personal)
   const [data, setData] = useState({ 
     title: personal.title ? personal.title : '',
     gender: personal.gender ? personal.gender : '',
@@ -37,6 +37,7 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
   }
    const updateData = e => {
     e.preventDefault();
+    // console.log('Update nationality : ', data.nationality)
     updateMemberProfile(data)
   }
   const { 
@@ -75,7 +76,7 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
           </div>
           <div className="form-group">
             <label htmlFor="phone">Telephone number</label>
-            <input type="tel" pattern={PHONE_NUMBER_PATTERN} name="phone" value={phone} onChange={handleChange} id="phone" pattern="[0-9]{1,11}" className="form-control"
+            <input type="tel" pattern={PHONE_NUMBER_PATTERN} name="phone" value={phone} onChange={handleChange} id="phone" className="form-control"
                />
           </div>
 
@@ -176,8 +177,8 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
           </div>
 
           <div className="form-group">
-            <label htmlFor="nationality"  onChange={handleChange}  > Nationality</label>
-            <select name="nationality" className="form-control" >
+            <label htmlFor="nationality"   > Nationality</label>
+            <select name="nationality" onChange={handleChange}  className="form-control" >
               {
                 COUNTRIES.map((country, idx) => (
                   <option value={country} key={idx}> { `${ country }` } </option>
