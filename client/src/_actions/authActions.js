@@ -8,7 +8,13 @@ import {
   // LOGIN_FAIL,
   LOAD_CURRENT_MEMBER,
   // SET_ALERT,
-  LOGOUT
+  LOGOUT,
+  GET_ACCESS,
+  UPLOAD_ACCESS,
+  ADD_ACCESS,
+  RESET_ACCESS_DATA,
+  DELETE_ACCESS,
+  FLUSH_ACCESS_LIST,
 } from './types';
 import { handleResponseErrors } from './alertActions';
 
@@ -92,6 +98,117 @@ export const loginMember = memberLogin => dispatch => {
     });
 };
 
+export const verifyAccessId = (accessId, history) => dispatch => {
+  dispatch({ type: LOADING });
+
+  axios.post('/api/allowlist/verify', accessId)
+    .then(({ data }) => {
+
+      if (history) history.push(`/signup/${data.data.id}`);
+    })
+    .catch(err => {
+
+      dispatch(handleResponseErrors(err, 'VERIFY_ACCESS_ID'));
+      dispatch({ type: LOADED });
+    });
+};
+
+export const getAccessList = () => dispatch => {
+  dispatch({ type: LOADING });
+
+  axios.get('/api/allowlist')
+    .then(({ data }) => {
+
+      dispatch({
+        type: GET_ACCESS,
+        payload: data.data
+      })
+    })
+    .catch(err => {
+
+      dispatch(handleResponseErrors(err, 'GET_ACCESS_LIST'));
+      dispatch({ type: LOADED });
+    });
+};
+
+export const uploadAccessList = (fd) => dispatch => {
+  dispatch({ type: LOADING });
+
+  const config = getConfigHeaders('multipart/form-data');
+
+  axios.post('/api/allowlist', fd, config)
+    .then(({ data }) => {
+      dispatch({
+        type: UPLOAD_ACCESS,
+        payload: data.data
+      })
+    })
+    .catch(err => {
+
+      dispatch(handleResponseErrors(err, 'UPLOAD_ACCESS_LIST'));
+      dispatch({ type: LOADED });
+    });
+};
+
+export const flushAccessList = () => dispatch => {
+  dispatch({ type: LOADING });
+
+  const config = getConfigHeaders();
+
+  axios.delete('/api/allowlist', config)
+    .then(({ data }) => {
+      dispatch({
+        type: FLUSH_ACCESS_LIST ,
+        payload: data.data
+      })
+    })
+    .catch(err => {
+
+      dispatch(handleResponseErrors(err, 'FLUSH_ACCESS_LIST'));
+      dispatch({ type: LOADED });
+    });
+};
+
+export const addAccess = accessData => dispatch => {
+  dispatch({ type: LOADING });
+
+  const config = getConfigHeaders();
+
+  axios.put(`/api/allowlist`, accessData, config)
+    .then(({ data }) => {
+      dispatch({
+        type: ADD_ACCESS ,
+        payload: data.data
+      })
+    })
+    .catch(err => {
+
+      dispatch(handleResponseErrors(err, 'ADD_ACCESS'));
+      dispatch({ type: LOADED });
+    });
+};
+export const deleteAccessById = id => dispatch => {
+  dispatch({ type: LOADING });
+
+  const config = getConfigHeaders();
+
+  axios.delete(`/api/allowlist/${ id }`, config)
+    .then(({ data }) => {
+      dispatch({
+        type: DELETE_ACCESS ,
+        payload: data.data
+      })
+    })
+    .catch(err => {
+
+      dispatch(handleResponseErrors(err, 'DELETE_ACCESS'));
+      dispatch({ type: LOADED });
+    });
+};
+
+export const resetAccessData = () => dispatch => {
+  dispatch({ type: RESET_ACCESS_DATA });
+};
 export const logout = () => dispatch => {
   dispatch({ type: LOGOUT });
 };

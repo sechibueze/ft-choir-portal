@@ -43,7 +43,7 @@ const Login = ({ loading, isAuthenticated, loginMember, setAlert }) => {
           <button type="submit" className="btn btn-primary btn-lg my-2"><i className="fa fa-sign-in" /> &nbsp; Login</button>
 
          <div className='my-1'>
-          <Link to='/signup' className='mr-3'> Sign up</Link>
+          <Link to='/auth' className='mr-3'> Sign up</Link>
           <Link to='/forgot-password' className='ml-3'> Forgot Password</Link>
          </div>
         </form>

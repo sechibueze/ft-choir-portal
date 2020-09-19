@@ -11,6 +11,10 @@ const AuthSidebar = ({ currentMember }) => {
         <li className="sidebar-linkitem">
           <Link to='/post-admin'><span className="fa fa-edit" />Post Admin</Link>
         </li>
+
+        <li className="sidebar-linkitem">
+          <Link to='/access-admin'><span className="fa fa-key" />Access Admin</Link>
+        </li>
       </Fragment>
   );
   return (

@@ -23,6 +23,7 @@ const { uploads } = require('../middlewares/uploadStorage')
  */
 // Append a middleware to validate access from AccessToken table before going forwars
 router.post('/', [
+  check('accessId', 'Access ID is required').notEmpty(),
   check('firstname', 'Firstname is required').notEmpty(),
   check('lastname', 'Lastname is required').notEmpty(),
   check('email', 'Email is required').isEmail(),

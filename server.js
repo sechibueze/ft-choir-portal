@@ -20,7 +20,9 @@ const profileRoutes = require('./routes/profileRoutes');
 const postRoutes = require('./routes/postRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const accessTokenRoutes = require('./routes/accessTokenRoutes');
+const allowlistRoutes = require('./routes/allowlistRoutes');
 
+app.use('/api/allowlist', allowlistRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/access', accessTokenRoutes);
 app.use('/api/members', memberRoutes);
