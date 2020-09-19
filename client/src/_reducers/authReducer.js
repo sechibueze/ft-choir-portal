@@ -6,14 +6,29 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOAD_CURRENT_MEMBER,
+  LOGOUT,
 
-  LOGOUT
+  GET_ACCESS,
+  ADD_ACCESS,
+  DELETE_ACCESS,
+  UPLOAD_ACCESS,
+  FLUSH_ACCESS_LIST,
+  RESET_ACCESS_DATA,
+
+
 } from '../_actions/types';
 const initialState = {
   token: null,
   isAuthenticated: null,
   currentMember: null,
-  loading: false
+  loading: false,
+
+  accessList: [],
+  newAccess: null,
+  updatedAccess: null,
+  deleteAccess: null,
+  updatedAccessList: null,
+  newAccessUpload: null,
 };
 export default function (state = initialState, action) {
   const { type, payload} = action;
@@ -43,6 +58,34 @@ export default function (state = initialState, action) {
         ...state,
         currentMember: payload,
         isAuthenticated: true
+      };
+    case GET_ACCESS:
+      return {
+        ...state,
+        accessList: payload, 
+      };
+    case UPLOAD_ACCESS:
+      return {
+        ...state,
+        newAccessUpload: payload, 
+      };
+    case ADD_ACCESS:
+      return {
+        ...state,
+        newAccess: payload, 
+      };
+    case FLUSH_ACCESS_LIST:
+    case DELETE_ACCESS:
+      return {
+        ...state,
+        updatedAccessList: payload, 
+      };
+    case RESET_ACCESS_DATA:
+      return {
+        ...state,
+        newAccessUpload: null,
+        newAccess: null,
+        updatedAccess: null
       };
     case LOADING:
       return {

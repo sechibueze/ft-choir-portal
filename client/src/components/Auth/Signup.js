@@ -7,8 +7,9 @@ import { setAlert } from '../../_actions/alertActions';
 import Alert from '../Alert';
 import Navbar from '../Navbar';
 
-const Signup = ({loading, isAuthenticated, setAlert, registerMember}) => {
-  const [memberData, setMemberData] = useState({  firstname: '', lastname: '',  email: '', password: '', confirm_password: '' });
+const Signup = ({loading, history, match, isAuthenticated, setAlert, registerMember}) => {
+  
+  const [memberData, setMemberData] = useState({ accessId: match.params.accessId ,  firstname: '', lastname: '',  email: '', password: '', confirm_password: '' });
 
   const handleChange = ({ target }) => {
     setMemberData(prev => ({ ...prev, [target.name]: target.value }));
@@ -28,6 +29,8 @@ const Signup = ({loading, isAuthenticated, setAlert, registerMember}) => {
     registerMember(memberData);
   }
   const { firstname, lastname, email, password, confirm_password } = memberData;
+
+  // if(!localStorage.getItem('accessId')) return <Redirect to='/auth' />
 
   if(isAuthenticated) return <Redirect to='/dashboard' />
 

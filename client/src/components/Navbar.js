@@ -16,7 +16,7 @@ const Navbar = () => {
         <li className="navlink-item"><Link to="/profile-edit"> <i className="fa fa-edit"></i> Manage Profile</Link></li>
         <li className="navlink-item"><Link to="/profile-info"> <i className="fa fa-microphone"></i> Profile Info</Link></li>
         <li className="navlink-item"><Link to="/member-list"> <i className="fa fa-users"></i> Members</Link></li> */}
-        <li className="navlink-item"><Link to="/signup"> <i className="fa fa-users"></i> Signup</Link></li>
+        <li className="navlink-item"><Link to="/auth"> <i className="fa fa-users"></i> Signup</Link></li>
         <li className="navlink-item"><Link to="/login"><i className="fa fa-sign-in"></i>Login</Link></li>
       </ul>
     </div>

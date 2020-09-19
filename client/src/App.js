@@ -17,6 +17,8 @@ import NotFound from './components/NotFound';
 
 import { loadCurrentMember } from './_actions/authActions';
 import store from './store';
+import VerifyAccessId from './components/Auth/VerifyAccessId';
+import AccessAdmin from './components/AccessAdmin/AccessAdmin';
 store.dispatch(loadCurrentMember());
 
 const App = () => {
@@ -30,13 +32,15 @@ const App = () => {
           <Route exact path='/forgot-password' component={ForgotPassword} />
           <Route path='/password-reset/:token?' component={ResetPassword} />
            
+          <Route exact path='/auth' component={VerifyAccessId} />
           <Route exact path='/login' component={Login} />
-          <Route exact path='/signup' component={Signup} />
+          <Route exact path='/signup/:accessId' component={Signup} />
           <Authenticate exact path='/dashboard' component={Dashboard} />
           <Authenticate exact path='/profile' component={Profile} />
           <Authenticate exact path='/members' component={Members} />
           <Authenticate exact path='/posts' component={PostPage} />
           <Authenticate exact path='/post-admin' component={PostAdmin} />
+          <Authenticate exact path='/access-admin' component={AccessAdmin} />
           <Route component={NotFound} />
         </Switch>
       </Router>

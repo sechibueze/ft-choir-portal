@@ -3,6 +3,12 @@ const crypto = require('crypto');
 const { Schema } = mongoose;
 
 const MemberSchema = new Schema({
+  accessId: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+  },
   firstname: {
     type: String,
     required: true

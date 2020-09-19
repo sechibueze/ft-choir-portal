@@ -1,6 +1,11 @@
 export const PHONE_NUMBER_PATTERN = '^[+]{0,1}[0-9]{10,13}$';
 export const TEXT_ONLY_PATTERN = "[A-Za-z]{1,32}";
 export const TEXT_WITH_SPACE = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
+export const STATUS = [
+  "active",
+  "suspended",
+  "inactive",
+];
 export const VOCAL_PARTS = [
   "Alto",
   "Tenor",

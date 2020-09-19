@@ -39,6 +39,7 @@ const registerMember = (req, res) => {
   }
   // ?Passed all validations 
   const {
+    accessId,
     firstname,
     middlename,
     lastname,
@@ -46,6 +47,7 @@ const registerMember = (req, res) => {
     password
   } = req.body;
 
+  // console.log('Access ID ', accessId)
   Member.findOne({ email })
     .then(member => {
       
@@ -58,6 +60,7 @@ const registerMember = (req, res) => {
       // No member exists
       let memberReq = {
         // Required fields
+        accessId,
         firstname,
         lastname,
         email,
