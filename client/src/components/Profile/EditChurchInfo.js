@@ -48,6 +48,7 @@ const EditChurchInfo = ({loading, churchInfo, closeModal, updateChurchInfo, upda
           <div className="form-group">
             <label htmlFor="wsf_status">WSF status</label>
             <select name="wsf_status" onChange={handleChange} value={wsf_status} id="wsf_status" className="form-control" >
+              <option selected value=''>--select--</option>
               {
                 WSF_STATUS.map((status, idx) => (
                   <option value={status} key={idx}> { `${ status }` } </option>

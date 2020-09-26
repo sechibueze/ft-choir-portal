@@ -7,7 +7,7 @@ const getAllProfiles = (req, res) => {
   Profile.find({})
     .populate({
       path: 'member',
-      select: ['firstname', 'middlename', 'lastname', 'email'],
+      select: ['firstname', 'middlename', 'lastname', 'email', 'accessId'],
       model: Member
     })
     .then(profiles => {
@@ -40,7 +40,7 @@ const getProfileById = (req, res) => {
   Profile.findOne({ _id: profileId})
     .populate({
       path: 'member',
-      select: ['firstname', 'middlename', 'lastname', 'email'],
+      select: ['firstname', 'middlename', 'lastname', 'email', 'accessId'],
       model: Member
     })
     .then(profile => {
@@ -80,7 +80,7 @@ const getProfileByMemeberId = (req, res) => {
   Profile.findOne({ member: memberId})
     .populate({
       path: 'member',
-      select: ['firstname', 'middlename', 'lastname', 'email', 'imageUrl'],
+      select: ['firstname', 'middlename', 'lastname', 'email', 'imageUrl', 'accessId'],
       model: Member
     })
     .then(profile => {
@@ -120,7 +120,7 @@ const getCurrentMemberProfile = (req, res) => {
   Profile.findOne({ member: memberId})
     .populate({
       path: 'member',
-      select: ['firstname', 'middlename', 'lastname', 'email', 'imageUrl'],
+      select: ['firstname', 'middlename', 'lastname', 'email', 'imageUrl', 'accessId'],
       model: Member
     })
     .then(profile => {

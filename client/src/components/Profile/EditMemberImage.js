@@ -36,7 +36,9 @@ const EditMemberImage = ({ loading, imageUrl,
 
           <Alert origin='MEMBER_IMAGE' />
           <div className="form-group">
+            <small style={{ fontSize: '.8rem'}}> Ideal image dimension: 195px by 195px </small>
             <label htmlFor="image"> Upload your image</label>
+            
             <input type="file" name="image" onChange={handleChange}  id="image" className="form-control"  />
           </div>
 

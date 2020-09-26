@@ -574,6 +574,18 @@ table.table tbody td {
 /****************************************************
 * Next one here
 ****************************/
+.dashboard-menu {
+  margin: 0.5rem 0rem;
+  background: #17a2b8;
+  padding: 1.5rem 0rem;
+}
+
+.dashboard-menu-icon {
+  padding: 0.5rem 0.7rem;
+  cursor: pointer;
+  color: #f4f4f4;
+}
+
 .bgHome {
   background-color: #f9f9f9;
   background-image: url(../img/ft-choir.jpg);

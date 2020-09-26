@@ -96,7 +96,7 @@ const ShowMembers = ({loading, members,
                 <thead>
                   <tr>
                     <td>S/N</td>
-                    {/* <td>_id </td> */}
+                    <td> ID </td>
                     <td>View </td>
                     <td>Firstname</td>
                     <td>Middlename</td>
@@ -111,36 +111,39 @@ const ShowMembers = ({loading, members,
                 </thead>
                 <tbody>
               {
-                members.map((member, idx) => (
-                  
+                members.map((member, idx) => {
+                  const {_id, accessId, firstname, 
+                    middlename, lastname, email, auth } = member;
+                  return (
                     <tr style={{textAlign: 'left'}}>
                       <td> { ++idx} </td>
-                      {/* <td> {member._id} </td> */}
+                      <td> { accessId && accessId } </td>
                       <td className="" >
-                       <span className="fa fa-eye" onClick={() => showProfile(member._id)} />
+                       <span className="fa fa-eye" onClick={() => showProfile(_id)} />
                           
                       </td>
-                      <td> { member.firstname} </td>
-                      <td> { member.middlename} </td>
-                      <td> { member.lastname} </td>
-                      <td> { member.email} </td>
-                      <td> { member.auth.join(' | ')} </td>
+                      <td> { firstname && firstname} </td>
+                      <td> { middlename && middlename} </td>
+                      <td> { lastname && lastname } </td>
+                      <td> { email && email } </td>
+                      <td> { auth &&  auth.join(' | ')} </td>
                       <td>  { formatDate(member.createdAt)} </td>
                       <td> { formatDate(member.updatedAt)} </td>
                       <td> 
-                        <span className="btn btn-dark btn-sm fa fa-key" onClick={() => handleToggleAdminAuth(member._id)}> 
-                         &nbsp;  { member.auth.includes('admin') ? 'REVOKE ADMIN' : 'MAKE ADMIN'}
+                        <span className="btn btn-dark btn-sm fa fa-key" onClick={() => handleToggleAdminAuth(_id)}> 
+                         &nbsp;  { auth && auth.includes('admin') ? 'REVOKE ADMIN' : 'MAKE ADMIN'}
                         </span> 
                       </td>
                       <td> 
-                         <span className="btn btn-danger btn-sm fa fa-trash" onClick={() => handleDeleteMemberById(member._id)}> 
+                         <span className="btn btn-danger btn-sm fa fa-trash" onClick={() => handleDeleteMemberById(_id)}> 
                           &nbsp; DELETE
                         </span> 
                       </td>
                     </tr>
+                  )
                     
                  
-                ))
+                })
               }
               </tbody>
               </table>
