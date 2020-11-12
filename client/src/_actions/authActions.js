@@ -18,6 +18,24 @@ import {
 } from './types';
 import { handleResponseErrors } from './alertActions';
 
+export const getRequestConfig = (method="GET", body = null ) => {
+  let requestConfig = {
+      method: method,
+      headers: {
+        'Content-Type':'application/json'
+      }
+    };
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      requestConfig.headers['x-auth-token'] = token;
+    }
+    if(body){
+      requestConfig["body"] = JSON.stringify(body)
+    }
+    return requestConfig;
+};
+
 export const getConfigHeaders = ( type = 'application/json') => {
   let configHeaders = {
     headers: {

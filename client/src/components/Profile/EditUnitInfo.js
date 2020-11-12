@@ -44,6 +44,7 @@ const EditUnitInfo = ({ unitInfo, closeModal, setAlert, updateUnitInfo, updatedU
           <div className="form-group">
             <label htmlFor="group"> Group</label>
             <select name="group"  onChange={handleChange} id="group" className="form-control" >
+              <option selected value=''>--select--</option>
               {
                 GROUPS.map((group, idx) => (
                   <option value={group} key={idx}> { `Group ${ group }` } </option>
@@ -55,6 +56,7 @@ const EditUnitInfo = ({ unitInfo, closeModal, setAlert, updateUnitInfo, updatedU
           <div className="form-group">
             <label htmlFor="rehearsal_location">Rehearsal Location</label>
             <select name="rehearsal_location"  onChange={handleChange} id="rehearsal_location" className="form-control" >
+              <option selected value=''>--select--</option>
               {
                 REHEARSAL_LOCATION.map((location, idx) => (
                   <option value={location} key={idx}> { `${ location }` } </option>
@@ -66,6 +68,7 @@ const EditUnitInfo = ({ unitInfo, closeModal, setAlert, updateUnitInfo, updatedU
           <div className="form-group">
             <label htmlFor="vocal_part">Part </label>
             <select name="vocal_part"  onChange={handleChange} id="vocal_part" className="form-control" >
+              <option selected value=''>--select--</option>
               {
                 VOCAL_PARTS.map((part, idx) => (
                   <option value={part} key={idx}> { `${ part }` } </option>
@@ -77,6 +80,7 @@ const EditUnitInfo = ({ unitInfo, closeModal, setAlert, updateUnitInfo, updatedU
           <div className="form-group">
             <label htmlFor="membership_status">Membership status</label>
             <select name="membership_status"  onChange={handleChange} id="membership_status" className="form-control" >
+              <option selected value=''>--select--</option>
               {
                 MEMBERSHIP_STATUS.map((status, idx) => (
                   <option value={status} key={idx}> { `${ status }` } </option>
@@ -88,6 +92,7 @@ const EditUnitInfo = ({ unitInfo, closeModal, setAlert, updateUnitInfo, updatedU
           <div className="form-group">
             <label htmlFor="leadership_status">Leadership status</label>
             <select name="leadership_status"  onChange={handleChange}  id="leadership_status" className="form-control" >
+              <option selected value=''>--select--</option>
               {
                 LEADERSHIP_STATUS.map((status, idx) => (
                   <option value={status} key={idx}> { `${ status }` } </option>
@@ -99,6 +104,7 @@ const EditUnitInfo = ({ unitInfo, closeModal, setAlert, updateUnitInfo, updatedU
           <div className="form-group">
             <label for="sub_group"> Sub group</label>
             <select name="sub_group"  onChange={handleChange}  id="sub_group" className="form-control" >
+              <option selected value=''>--select--</option>
               {
                 SUB_GROUP.map((group, idx) => (
                   <option value={group} key={idx}> { `${ group }` } </option>

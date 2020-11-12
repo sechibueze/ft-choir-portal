@@ -75,6 +75,7 @@ const EditNOK = ({ nok, closeModal, setAlert, updatedNOKInfo, updateNOKInfo}) =>
           <div className="form-group">
             <label htmlFor="nok_relation">Relation to next of kins</label>
             <select name="nok_relation"  onChange={handleChange}  className="form-control" required>
+              <option selected value=''>--select--</option>
               <option value="husband"> Husband</option>
               <option value="Son"> Son</option>
               <option value="Daughter"> Daughter</option>

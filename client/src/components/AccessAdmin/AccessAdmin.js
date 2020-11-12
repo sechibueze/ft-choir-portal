@@ -36,10 +36,10 @@ const AccessAdmin = ({loading, newAccess, getAccessList, deleteAccessById, flush
   return ( 
     <Fragment>
       <AuthContainer>
-        <div className=''>
-            <span onClick={() => setCanAddAccess(true)}> Add Access </span>
-            <span onClick={() => setCanUplaodAccess(true)}> Bulk upload </span>
-            <span onClick={() => handleFlushAccessList()}> Bulk Delete </span>
+        <div className='dashboard-menu'>
+            <span className='dashboard-menu-icon' onClick={() => setCanAddAccess(true)}> Add Access </span>
+            <span className='dashboard-menu-icon' onClick={() => setCanUplaodAccess(true)}> Bulk upload </span>
+            <span className='dashboard-menu-icon' onClick={() => handleFlushAccessList()}> Bulk Delete </span>
         </div>
 
         {

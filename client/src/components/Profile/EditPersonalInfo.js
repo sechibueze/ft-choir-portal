@@ -60,6 +60,7 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
           <div className="form-group">
             <label htmlFor="title">Title</label>
             <select name="title"  onChange={handleChange} id="title" className="form-control" >
+              <option selected value=''>--select--</option>
               {
                 TITLES.map((title, idx) => (
                   <option value={title} key={idx}> { `${ title }` } </option>
@@ -70,6 +71,7 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
           <div className="form-group">
             <label htmlFor="gender">Gender </label>
             <select name="gender"  onChange={handleChange} id="gender" className="form-control" >
+              <option selected value=''>--select--</option>
               <option value="Male" > Male  </option>
               <option value="Female" > Female  </option>
             </select>
@@ -115,6 +117,7 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
           <div className="form-group">
             <label htmlFor="marital_status">Marital status</label>
             <select name="marital_status"  onChange={handleChange}   id="marital_status" className="form-control" >
+              <option selected value=''>--select--</option>
               {
                 MARITAL_STATUS.map((status, idx) => (
                   <option value={status} key={idx}> { `${ status }` } </option>
@@ -127,6 +130,7 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
           <div className="form-group">
             <label htmlFor="work_status">Work status</label>
             <select name="work_status" onChange={handleChange}   className="form-control" required>
+              <option selected value=''>--select--</option>
               {
                 WORK_STATUS.map((status, idx) => (
                   <option value={status} key={idx}> { `${ status }` } </option>
@@ -167,6 +171,7 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
           <div className="form-group">
             <label htmlFor="state_origin"> State of origin</label>
             <select name="state_origin"  onChange={handleChange}   className="form-control" >
+              <option selected value=''>--select--</option>
               {
                 STATES.map((state, idx) => (
                   <option value={state} key={idx}> { `${ state }` } </option>
@@ -179,6 +184,7 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
           <div className="form-group">
             <label htmlFor="nationality"   > Nationality</label>
             <select name="nationality" onChange={handleChange}  className="form-control" >
+              <option selected value=''>--select--</option>
               {
                 COUNTRIES.map((country, idx) => (
                   <option value={country} key={idx}> { `${ country }` } </option>

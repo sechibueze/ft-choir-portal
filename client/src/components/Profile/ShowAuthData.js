@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 const ShowAuthData = ({ member }) => {
   const { 
     // _id,
-    firstname, middlename, lastname, email} = member;
+    firstname, middlename, lastname, email, accessId} = member;
   return ( 
     <Fragment>
        <section className="section">
@@ -11,6 +11,10 @@ const ShowAuthData = ({ member }) => {
             </header>
             <div className="data">
               
+              <div className="data-field">
+                <span className="data-key"> Access ID </span>
+                <article className="data-value"> { accessId && accessId} </article>
+              </div>
               <div className="data-field">
                 <span className="data-key">Firstname </span>
                 <article className="data-value"> { firstname && firstname} </article>

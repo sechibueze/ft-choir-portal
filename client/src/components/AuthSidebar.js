@@ -15,6 +15,9 @@ const AuthSidebar = ({ currentMember }) => {
         <li className="sidebar-linkitem">
           <Link to='/access-admin'><span className="fa fa-key" />Access Admin</Link>
         </li>
+        <li className="sidebar-linkitem">
+          <Link to='/shiloh-manager'><span className="fa fa-cogs" />Shiloh Admin</Link>
+        </li>
       </Fragment>
   );
   return (
@@ -42,6 +45,9 @@ const AuthSidebar = ({ currentMember }) => {
           </li>
           <li className="sidebar-linkitem">
             <Link to='/posts'><span className="fa fa-microphone" />Information</Link>
+          </li>
+          <li className="sidebar-linkitem">
+            <Link to='/shiloh-attendee'><span className="fa fa-microphone" />Shiloh</Link>
           </li>
           {
             currentMember.auth.includes('admin') ? adminLinks : null

@@ -1,3 +1,15 @@
+export const baseURL = process.env.NODE_ENV === 'production' ? 'https://ft-choir-portal.herokuapp.com' : 'http://localhost:5000';
+
+/********SHILOH */
+export const SHILOH_SIGNUP = 'SHILOH_SIGNUP';
+export const GET_SHILOH_DATA = 'GET_SHILOH_DATA';
+export const UPDATE_SHILOH_DATA = 'UPDATE_SHILOH_DATA';
+export const DELETE_SHILOH_DATA = 'DELETE_SHILOH_DATA';
+export const RESET_SHILOH_DATA = 'RESET_SHILOH_DATA';
+export const GET_SHILOH_ATTENDANCE_LIST = 'GET_SHILOH_ATTENDANCE_LIST';
+export const GENERATE_SHILOH_ATTENDANCE_REPORT = 'GENERATE_SHILOH_ATTENDANCE_REPORT';
+
+/******** ALERT  */
 export const SET_ALERT = 'SET_ALERT';
 export const CLEAR_ALERT = 'CLEAR_ALERT';
 export const CONFIRM_ACCESS = 'CONFIRM_ACCESS';
