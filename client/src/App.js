@@ -19,6 +19,8 @@ import { loadCurrentMember } from './_actions/authActions';
 import store from './store';
 import VerifyAccessId from './components/Auth/VerifyAccessId';
 import AccessAdmin from './components/AccessAdmin/AccessAdmin';
+import ShilohAttendeeRecord from './components/Shiloh/ShilohAttendeeRecord';
+import ShilohManager from './components/Shiloh/ShilohManager';
 store.dispatch(loadCurrentMember());
 
 const App = () => {
@@ -41,6 +43,8 @@ const App = () => {
           <Authenticate exact path='/posts' component={PostPage} />
           <Authenticate exact path='/post-admin' component={PostAdmin} />
           <Authenticate exact path='/access-admin' component={AccessAdmin} />
+          <Authenticate exact path='/shiloh-attendee' component={ShilohAttendeeRecord} />
+          <Authenticate exact path='/shiloh-manager' component={ShilohManager} />
           <Route component={NotFound} />
         </Switch>
       </Router>
