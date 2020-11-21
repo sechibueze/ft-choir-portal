@@ -27,7 +27,7 @@ export const registerForShiloh = data => dispatch => {
         }
         // Response is outsie 2xx range
         response.json().then(errorResponse => {                 
-          errorResponse.errors.map(errorText => setAlert(errorText, SHILOH_SIGNUP) )
+          errorResponse.errors.map(errorText => dispatch(setAlert(errorText, SHILOH_SIGNUP)) )
         })       
       })
       .then(data => {

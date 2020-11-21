@@ -35,12 +35,16 @@ const ShilohEvent = ({loading, currentMember,resetShilohDaata, getShilohRegistra
       {
         !loading && shilohData ? (
           <Fragment>
-            <span className="" onClick={() => setEditRegisterationVisibility(true)}> Edit record </span>
+            <div className="context-box">
+              <span className="btn btn-success p-1" onClick={() => setEditRegisterationVisibility(true)}> Edit record </span>
+            </div>
             <ShowShilohData shilohData={shilohData} />
           </Fragment>
         ) : (
           <Fragment>
-            <h1 onClick={() => setRegisterationVisibility(true)}> Register for shiloh </h1>
+           <div className="context-box">
+              <h1 className="btn btn-primary m-1 p-1" onClick={() => setRegisterationVisibility(true)}> Register for shiloh </h1>
+           </div>
           </Fragment>
         )
       }
