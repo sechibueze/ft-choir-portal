@@ -17,45 +17,52 @@ const ShilohManager = ({loading, getShilohRegistration, generateShilohRegistrati
       {
         shilohList.length > 0 ? (
           <Fragment>
-            {
-              !shilohReportUrl ? 
-              (<span onClick={() => generateShilohRegistrationReport()} className="btn btn-primary m-1 p-1"> {loading ? 'wait...' : 'Get report'} </span>) :
-               (<a target="_blank" href={ shilohReportUrl }>Download Report </a>)
-            }
-            <table className="table">
-              <tr>
-                <th> S/N </th>
-                <th> Firstname </th>
-                <th> Lastname </th>
-                <th> Email </th>
-                <th> Access ID </th>
-                <th> OTP </th>
-                <th> Phone </th>
-                <th> Gender </th>
-                <th> Accomodation </th>
-                <th> Availability </th>
-                <th> Delete </th>
-              </tr>
+            <div className="context-box">
               {
-                shilohList.map((attendee, idx) => {
-                  const {accessId, otp, profile: {phone, gender, unit_info: { vocal_part, group}}, accomodation, availability, member: { firstname, lastname, email} } = attendee;
-                  return (
-                    <tr key={idx}>
-                      <tr> { ++idx } </tr>
-                      <td> { firstname && firstname} </td>
-                      <td> { lastname && lastname} </td>
-                      <td> { email && email} </td>
-                      <td> { accessId && accessId} </td>
-                      <td> { otp && otp} </td>
-                      <td> { phone && phone} </td>
-                      <td> { gender && gender} </td>
-                      <td> { accomodation && accomodation} </td>
-                      <td> { availability && availability.join(',')} </td>
-                      <td> <span onClick={() => handleDelete(accessId)} className="fa fa-times"/> </td>
-                    </tr>
-                  )
-                })
+                !shilohReportUrl ? 
+                (<span onClick={() => generateShilohRegistrationReport()} className="btn btn-primary m-1 p-1"> {loading ? 'wait...' : 'Get report'} </span>) :
+                (<a target="_blank" href={ shilohReportUrl } className="btn btn-primary m-1 p-1">Download Report </a>)
               }
+            </div>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th> S/N </th>
+                  <th> Firstname </th>
+                  <th> Lastname </th>
+                  <th> Email </th>
+                  <th> Access ID </th>
+                  <th> OTP </th>
+                  <th> Phone </th>
+                  <th> Gender </th>
+                  <th> Accomodation </th>
+                  <th> Availability </th>
+                  <th> Delete </th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {
+                  shilohList.map((attendee, idx) => {
+                    const {accessId, otp, profile: {phone, gender, unit_info: { vocal_part, group}}, accomodation, availability, member: { firstname, lastname, email} } = attendee;
+                    return (
+                      <tr key={idx}>
+                        <td> { ++idx } </td>
+                        <td> { firstname && firstname} </td>
+                        <td> { lastname && lastname} </td>
+                        <td> { email && email} </td>
+                        <td> { accessId && accessId} </td>
+                        <td> { otp && otp} </td>
+                        <td> { phone && phone} </td>
+                        <td> { gender && gender} </td>
+                        <td> { accomodation && accomodation} </td>
+                        <td> { availability && availability.join(',')} </td>
+                        <td> <span onClick={() => handleDelete(accessId)} className="fa fa-times"/> </td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
             </table>
           </Fragment>
         ) : (<h1> No Attendee yet </h1>)

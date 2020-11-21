@@ -9,7 +9,10 @@
   cursor: pointer;
   color: $light-color;
 }
-
+.context-box{
+  margin: 1.5rem auto;
+  display: block;
+}
 .bgHome{
   background-color: #f9f9f9;
   background-image: url(../img/ft-choir.jpg);

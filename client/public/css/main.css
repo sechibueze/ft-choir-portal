@@ -586,6 +586,11 @@ table.table tbody td {
   color: #f4f4f4;
 }
 
+.context-box {
+  margin: 1.5rem auto;
+  display: block;
+}
+
 .bgHome {
   background-color: #f9f9f9;
   background-image: url(../img/ft-choir.jpg);

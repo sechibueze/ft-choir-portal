@@ -32,7 +32,7 @@ const AuthSidebar = ({ currentMember }) => {
               <img src="./img/ftc-logo.png" className="fa fa-connectdevelop auth-sidebar-logo" />
                 &nbsp;&nbsp;
               FTC Portal
-               </Link>
+            </Link>
           </div>
        
 
@@ -47,7 +47,7 @@ const AuthSidebar = ({ currentMember }) => {
             <Link to='/posts'><span className="fa fa-microphone" />Information</Link>
           </li>
           <li className="sidebar-linkitem">
-            <Link to='/shiloh-attendee'><span className="fa fa-microphone" />Shiloh</Link>
+            <Link to='/shiloh-attendee'><span className="fa fa-cog" />Shiloh</Link>
           </li>
           {
             currentMember.auth.includes('admin') ? adminLinks : null
