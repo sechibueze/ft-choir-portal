@@ -39,41 +39,41 @@ const EditNOK = ({ nok, closeModal, setAlert, updatedNOKInfo, updateNOKInfo}) =>
        <section className="section">
         <header className="section-header">
           <h3 className="title">
-            Next of Kins Information
+            Next of Kin Information
           </h3>
         </header>
         <form className="form" onSubmit={updateData}>
 
           <Alert origin='NOK_INFO_UPDATE' />
           <div className="form-group">
-            <label htmlFor="nok_name"> Name of next of kins</label>
+            <label htmlFor="nok_name"> Name of next of kin</label>
             <input type="text" pattern={TEXT_WITH_SPACE} name="nok_name" onChange={handleChange} value={nok_name} id="nok_name" className="form-control"  />
           </div>
 
           <div className="form-group">
-            <label htmlFor="nok_address">Address of next of kins</label>
+            <label htmlFor="nok_address">Address of next of kin</label>
             <input type="text" name="nok_address" value={nok_address}  onChange={handleChange}  id="nok_address" className="form-control" 
                />
           </div>
 
           <div className="form-group">
-            <label htmlFor="nok_phone">Phone number of next of kins</label>
+            <label htmlFor="nok_phone">Phone number of next of kin</label>
             <input type="tel" pattern={PHONE_NUMBER_PATTERN} name="nok_phone" value={nok_phone}  onChange={handleChange}  id="nok_phone" className="form-control"  />
           </div>
 
           <div className="form-group">
-            <label htmlFor="occupation">Occupation of next of kins</label>
+            <label htmlFor="occupation">Occupation of next of kin</label>
             <input type="text" pattern={TEXT_WITH_SPACE} name="nok_occupation" value={nok_occupation}  onChange={handleChange}  id="occupation" className="form-control" 
                />
           </div>
 
           <div className="form-group">
-            <label htmlFor="nok_email">Email of next of kins</label>
+            <label htmlFor="nok_email">Email of next of kin</label>
             <input type="email" name="nok_email" value={nok_email}  onChange={handleChange}  id="nok_email" className="form-control"  />
           </div>
 
           <div className="form-group">
-            <label htmlFor="nok_relation">Relation to next of kins</label>
+            <label htmlFor="nok_relation">Relation to next of kin</label>
             <select name="nok_relation"  onChange={handleChange}  className="form-control" required>
               <option selected value=''>--select--</option>
               <option value="husband"> Husband</option>
@@ -88,7 +88,7 @@ const EditNOK = ({ nok, closeModal, setAlert, updatedNOKInfo, updateNOKInfo}) =>
             </select>
           </div>
 
-          <button type="submit" className="btn btn-sm btn-primary fa fa-check"> &nbsp;&nbsp; Update Next of Kins
+          <button type="submit" className="btn btn-sm btn-primary fa fa-check"> &nbsp;&nbsp; Update Next of Kin
             Data</button>
         </form>
       </section>

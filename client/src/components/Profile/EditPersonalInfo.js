@@ -78,13 +78,13 @@ const EditPersonalInfo = ({ personal, closeModal, setAlert, updateMemberProfile,
           </div>
           <div className="form-group">
             <label htmlFor="phone">Telephone number</label>
-            <input type="tel" pattern={PHONE_NUMBER_PATTERN} name="phone" value={phone} onChange={handleChange} id="phone" className="form-control"
+            <input type="tel" pattern={PHONE_NUMBER_PATTERN}  placeholder="08123456789"  name="phone" value={phone} onChange={handleChange} id="phone" className="form-control"
                />
           </div>
 
           <div className="form-group">
             <label htmlFor="whatsapp_phone">Whatsapp phone</label>
-            <input type="tel" pattern={PHONE_NUMBER_PATTERN} name="whatsapp_phone" value={whatsapp_phone}  onChange={handleChange}  id="whatsapp_phone" className="form-control"
+            <input type="tel" pattern={PHONE_NUMBER_PATTERN}  placeholder="08123456789"  name="whatsapp_phone" value={whatsapp_phone}  onChange={handleChange}  id="whatsapp_phone" className="form-control"
               />
           </div>
 
