@@ -69,7 +69,6 @@ export const loadCurrentMember = () => dispatch => {
   const configHeaders = getConfigHeaders();
   axios.get('/api/members/auth', configHeaders)
     .then(({ data }) => {
-      console.log('Data ', data)
       dispatch({ type: LOAD_CURRENT_MEMBER, payload: data.data });
     })
     .catch(err => {
@@ -83,7 +82,6 @@ export const registerMember = memberData => dispatch => {
 
   axios.post('/api/members', memberData)
     .then(({ data }) => {
-      console.log('Data ', data)
       localStorage.setItem('token', data.token);
 
       dispatch(loadCurrentMember());
@@ -110,7 +108,6 @@ export const loginMember = memberLogin => dispatch => {
       dispatch({ type: LOGIN_SUCCESS, payload: data.token });
     })
     .catch(err => {
-      console.log('Err ', err)
       dispatch(handleResponseErrors(err, 'LOGIN'));
       dispatch({ type: LOADED });
     });

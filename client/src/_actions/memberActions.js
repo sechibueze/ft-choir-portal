@@ -54,12 +54,10 @@ export const updateMemberImage = imageData => dispatch => {
   const configHeaders = getConfigHeaders('multipart/form-data');
   axios.put('/api/members/image', imageData, configHeaders)
     .then(({ data }) => {
-      console.log('Currently logged in member profile ', data)
       dispatch({ type: UPDATE_MEMBER_IMAGE, payload: data.data });
       dispatch({ type: LOADED });
     })
     .catch(err => {
-      console.log('Error in loading currently logged in member profile ', err)
       dispatch(handleResponseErrors(err, 'MEMBER_IMAGE'));
     });
 };
@@ -72,11 +70,10 @@ export const sendPasswordResetToken = data => dispatch => {
     .then(({ data }) => {
       // console.log('Loaded members ', data)
       dispatch({ type: SEND_PASSWORD_RESET_TOKEN, payload: data });
-      dispatch(setAlert(data.message, SEND_PASSWORD_RESET_TOKEN, 'danger', 40000))
+      dispatch(setAlert(data.message, SEND_PASSWORD_RESET_TOKEN, 'success', 40000))
       dispatch({ type: LOADED });
     })
     .catch(err => {
-      console.log('Error iin loading members', err)
       dispatch(handleResponseErrors(err, 'SEND_PASSWORD_RESET_TOKEN'));
     });
 };
@@ -89,9 +86,8 @@ export const resetMemberPassword = (data, history = '') => dispatch => {
   // localhost:5000/api/members/forgotpassword
   axios.put(`/api/members/resetpassword`, data,  configHeaders)
     .then(({ data }) => {
-      console.log('Loaded members ', data)
       dispatch({ type: RESET_MEMBER_PASSWORD, payload: data });
-      dispatch(setAlert(data.message, RESET_MEMBER_PASSWORD, 'danger', 40000))
+      dispatch(setAlert(data.message, RESET_MEMBER_PASSWORD, 'success', 40000))
       dispatch({ type: LOADED });
 
       if (history) {
@@ -99,7 +95,6 @@ export const resetMemberPassword = (data, history = '') => dispatch => {
       }
     })
     .catch(err => {
-      console.log('Error iin loading members', err)
       dispatch(handleResponseErrors(err, 'RESET_MEMBER_PASSWORD'));
     });
 };

@@ -353,7 +353,7 @@ export const LEADERSHIP_STATUS = [
 	"Committee Chair",
 	"Chorister"
 ]
-export const MEMBERSHIP_STATUS = ["Member", "Ordained member", "Pastorate"]
+export const MEMBERSHIP_STATUS = ["Member", "Ordained Worker", "Pastorate"]
 export const TITLES = ["Mr", "Miss", "Mrs", "Deacon", "Deaconess", "Pastor", "Dr", "Barr", "Hon"]
 export const WORK_STATUS = [
 	"Employed",

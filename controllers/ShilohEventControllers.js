@@ -24,7 +24,7 @@ const handleShilohEventRegistration = (req, res) => {
   Profile.findOne({member: memberId})
     .populate({
       path: 'member',
-      select: ['firstname', 'middlename', 'lastname', 'email', 'accessId'],
+      select: ['firstname', 'middlename', 'lastname', 'email', 'accessId', 'imageUrl'],
       model: Member
     })
     .then(memberProfileData => {
@@ -39,9 +39,11 @@ const handleShilohEventRegistration = (req, res) => {
       const {
          gender, phone, 
          member: { firstname, lastname, accessId }, 
-         unit_info: { group, vocal_part }} = memberProfileData;
+         unit_info: { group, vocal_part },
+         imageUrl
+        } = memberProfileData;
       
-      if (!gender || !phone || !firstname || !lastname || !group || !vocal_part) {
+      if (!gender || !phone || !firstname || !lastname || !group || !vocal_part || imageUrl) {
         return res.status(401).json({
           status: false,
           errors: ['Incomplete profile']
