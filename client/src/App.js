@@ -30,7 +30,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route exact path='/access' component={Access} />
+          <Route exact path='/grantaccess' component={Access} />
           <Route exact path='/forgot-password' component={ForgotPassword} />
           <Route path='/password-reset/:token?' component={ResetPassword} />
            
