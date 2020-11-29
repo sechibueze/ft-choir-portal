@@ -46,7 +46,23 @@ const App = () => {
           <Authenticate exact path='/shiloh-attendee' component={ShilohAttendeeRecord} />
           <Authenticate exact path='/shiloh-manager' component={ShilohManager} />
           <Route component={NotFound} />
+
+          {/* <div className="footer" style={{ backgroundColor: '#333'}}>
+            <p> Powered by: <a style={{color: '#fff'}} href="https://ftwinnersictg.org" target="_blank">
+              <img src="./img/ictg-logo.png" alt="developer logo"/>
+              ICTGroup </a></p>
+          </div> */}
+          
         </Switch>
+          <div className="footer" style={{ margin: 'auto', textAlign:'center', backgroundColor: '#333', padding: '1rem'}}>
+            <p style={{color: '#fff'}}> Powered by: <a style={{color: '#fff'}} href="https://ftwinnersictg.org" target="_blank">
+              <img style={{
+                width: '55px',
+                verticalAlign: 'bottom',
+                paddingRight: '1rem',
+              }} src="./img/ictg-logo.png" alt="developer logo"/>
+              ICTGroup </a></p>
+          </div>
       </Router>
     </Provider>
   );
