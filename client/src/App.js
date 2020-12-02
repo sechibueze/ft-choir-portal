@@ -55,7 +55,7 @@ const App = () => {
           
         </Switch>
           <div className="footer" style={{ margin: 'auto', textAlign:'center', backgroundColor: '#333', padding: '1rem'}}>
-            <p style={{color: '#fff', fontSize: '0.8rem'}}> Powered by: <a style={{color: '#fff'}} href="https://ftwinnersictg.org" target="_blank">
+            <p style={{color: '#fff', fontSize: '0.8rem'}}> Powered by <a style={{color: '#fff', fontSize: '0.8rem'}} href="https://ftwinnersictg.org" target="_blank">
               <img style={{
                 width: '55px',
                 verticalAlign: 'bottom',
