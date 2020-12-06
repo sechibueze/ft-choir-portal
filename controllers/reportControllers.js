@@ -8,6 +8,7 @@ const Member = require('../models/Member');
 const formatReportData = require('../helpers/formatReportData')
 
 const generateReportForProfiles = (req, res) => {
+  // console.log('called report')
   Profile.find({})
     .populate({
       path: 'member',
@@ -22,7 +23,14 @@ const generateReportForProfiles = (req, res) => {
           })
       }
       
-      const reportData = formatReportData(profiles);
+      console.log('profiles lingth', profiles.length);
+      // console.log('profiles one', profiles[0]);
+
+      let reportData = formatReportData(profiles);
+
+      console.log('report count ', reportData.length)
+
+      console.log('report data test ', reportData[50])
       if (!reportData) {
         return  res.status(400).json({
             status: false,
@@ -33,37 +41,38 @@ const generateReportForProfiles = (req, res) => {
     // Convert JSON to Bufferls
     // const reportBuffer = Buffer.from(JSON.stringify(reportData));
     // Get Data URI
+    let _reportData = JSON.stringify(reportData);
 
-
-    const path2file = "reports/master_" + Date.now() + "_report.csv";
-    const ws = fs.createWriteStream(path2file);
+      const path2file = "reports/master_" + Date.now() + "_report.csv";
+      const ws = fs.createWriteStream(path2file);
       // console.log('repord', reportData)
-    fastcsv
-      .write(JSON.parse(reportData), { headers: true })
-      .on("finish", function () {
-        console.log("Write to master lis successfully!", ws.path);
-        // convert the .csv to .xlsx
-        convertapi.convert('xlsx', {
-          File: ws.path
-        }, 'csv').then(function (result) {
-          console.log('url : ', result.file.url);
-          const data = result.file.url;
-          return res.status(200).json({
-                status: true,
-                message: 'Report data',
-                data
-              })
-        }).catch(err => {
-          return  res.status(500).json({
-            status: false,
-            error: 'Failed to generate profiles report',
-            err
-          })
-          
-        });
+      fastcsv
+        .write(JSON.parse(_reportData), { headers: true })
+        .on("finish", function () {
+          console.log("Write to master lis successfully!", ws.path);
+          // convert the .csv to .xlsx
+          convertapi.convert('xlsx', {
+            File: ws.path
+          }, 'csv').then(function (result) {
+            console.log('url : ', result.file.url);
+            const data = result.file.url;
+            return res.status(200).json({
+                  status: true,
+                  message: 'Report data',
+                  data
+                })
+          }).catch(err => {
+            console.log('error  ', err)
+            return  res.status(500).json({
+              status: false,
+              error: 'Failed to generate profiles report',
+              err
+            })
+            
+          });
 
-      })
-      .pipe(ws);
+        })
+        .pipe(ws);
       
     })
     .catch(err => {

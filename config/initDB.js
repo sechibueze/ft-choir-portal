@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const initDB = () => {
   const URI = process.env.MONGODBURI || 'mongodb://localhost:27017/ft-choir-portal';
+  
   mongoose.connect(URI,
     {
       useFindAndModify: true,

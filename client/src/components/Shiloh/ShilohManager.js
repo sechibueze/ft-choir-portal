@@ -12,6 +12,8 @@ const ShilohManager = ({loading, getShilohRegistration, generateShilohRegistrati
       deleteShilohRegistrationById(accessId);
     }
   }
+
+  if(loading) return <h1> Loading ...</h1>
   return ( 
     <AuthContainer>
       {
@@ -44,9 +46,24 @@ const ShilohManager = ({loading, getShilohRegistration, generateShilohRegistrati
 
                 {
                   shilohList.map((attendee, idx) => {
-                    const {accessId, otp, profile: {phone, gender, unit_info: { vocal_part, group}}, accomodation, availability, member: { firstname, lastname, email} } = attendee;
-                    return (
-                      <tr key={idx}>
+                    // "FTCHR5432" Tosin Emmanuel Adeleke
+                    // "FTCHR5432" 
+                    // "FTCHR0498"
+                    // "FTCHR0498"
+
+                    // "FTCHR5980"
+                    // "FTCHR4956"
+                    // "FTCHR1541"
+                    // "FTCHR4353"
+                    // "FTCHR1136"
+                   
+                    if (!attendee.profile || !attendee.member) {
+                      console.log('A without profile or member', attendee)
+                    }else{
+
+                      const {accessId, otp, profile: {phone, gender, unit_info: { vocal_part, group}}, accomodation, availability, member: { firstname, lastname, email} } = attendee;
+                      return (
+                        <tr key={idx}>
                         <td> { ++idx } </td>
                         <td> { firstname && firstname} </td>
                         <td> { lastname && lastname} </td>
@@ -60,6 +77,7 @@ const ShilohManager = ({loading, getShilohRegistration, generateShilohRegistrati
                         <td> <span onClick={() => handleDelete(accessId)} className="fa fa-times"/> </td>
                       </tr>
                     )
+                  }
                   })
                 }
               </tbody>

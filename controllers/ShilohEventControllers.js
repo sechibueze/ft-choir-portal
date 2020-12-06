@@ -213,37 +213,51 @@ const generateShilohAttendanceReport = (req, res) => {
       if (!list || list.length < 1) return res.status(401).json({ status: false, errors: ['No Attendee was found'] });
       
       let attendanceList = list.map(attendee => {
-        const {
-          accomodation, 
-          availability,
-          member: {firstname, lastname, email },  
-          profile: { gender, phone, unit_info: { vocal_part, group }},
-          otp,
-          accessId
-        } = attendee;
-        
-      let row = { 
-        accessId,
-        otp,
-        firstname, lastname, 
-        email, 
-        gender, 
-        availability: availability.join(','), 
-        accomodation, 
-        vocal_part, 
-        group, 
-        phone,
-      };
 
-        return row
+        if (!attendee.profile || !attendee.member) {
+          console.log('Attendee ', attendee)
+          return 'out';
+        } else {
+          
+          const {
+            accomodation, 
+            availability,
+            member: {firstname, lastname, email },  
+            profile: { gender, phone, unit_info: { vocal_part, group }},
+            otp,
+            accessId
+          } = attendee;
+          
+          let row = { 
+            accessId,
+            otp,
+            firstname, lastname, 
+            email, 
+            gender, 
+            availability: availability.join(','), 
+            accomodation, 
+            vocal_part, 
+            group, 
+            phone,
+          };
+  
+          return row
+        }
       })
-      attendanceList = JSON.stringify(attendanceList)
+      console.log('Att b4 filter', attendanceList.length)
+
+      let _attendanceList = attendanceList.filter(att => att !== 'out');
+      
+      console.log('Att after filter', _attendanceList.length)
+
+      _attendanceList = JSON.stringify(_attendanceList)
       const path2file = "reports/shiloh_" + Date.now() + "_report.csv";
       const ws = fs.createWriteStream(path2file);
-    
+
+
       try {
         fastcsv
-          .write(JSON.parse(attendanceList), { headers: true })
+          .write(JSON.parse(_attendanceList), { headers: true })
           .on("finish", function () {
             // convert the .csv to .xlsx
             convertapi.convert('xlsx', {
@@ -260,6 +274,7 @@ const generateShilohAttendanceReport = (req, res) => {
               return  res.status(500).json({
                 status: false,
                 error: 'Failed to generate profiles report',
+                err: err
               
               })
               

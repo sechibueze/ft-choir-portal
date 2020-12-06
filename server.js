@@ -2,11 +2,10 @@ const express = require('express');
 const path = require('path');
 const { config } = require('dotenv');
 const initDB = require('./config/initDB');
+config(); // Load .env Variables
 
 const app = express();
 initDB();
-config(); // Load .env Variables
-
 const port = process.env.PORT || 5000;
 app.use(express.json({extended: true}));
 app.use((req, res, next) => {

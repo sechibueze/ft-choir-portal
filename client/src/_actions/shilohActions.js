@@ -110,6 +110,7 @@ export const updateShilohRegistrationById = (shilohData) => dispatch => {
 }
 
 export const getShilohRegistration = () => dispatch => {
+    dispatch({ type: LOADING });
     const url = `${ baseURL }/api/shiloh/attendees`;
     const requestConfig = getRequestConfig();
     fetch(url, requestConfig)
@@ -119,7 +120,8 @@ export const getShilohRegistration = () => dispatch => {
         }
         // Response is outsie 2xx range
         response.json().then(errorResponse => {                 
-          errorResponse.errors.map(errorText => setAlert(errorText, GET_SHILOH_ATTENDANCE_LIST) )
+          errorResponse.errors.map(errorText => dispatch(setAlert(errorText, GET_SHILOH_ATTENDANCE_LIST)));
+          dispatch({ type: LOADED });
         })       
       })
       .then(data => {
@@ -132,7 +134,7 @@ export const getShilohRegistration = () => dispatch => {
         }
       })
       .catch(err => {       
-        setAlert('Network error, please try again later', GET_SHILOH_ATTENDANCE_LIST);
+        dispatch(setAlert('Network error, please try again later', GET_SHILOH_ATTENDANCE_LIST));
         dispatch({ type: LOADED })
       })
 }
@@ -149,7 +151,7 @@ export const generateShilohRegistrationReport = () => dispatch => {
         }
         // Response is outsie 2xx range
         response.json().then(errorResponse => {                 
-          errorResponse.errors.map(errorText => setAlert(errorText, GENERATE_SHILOH_ATTENDANCE_REPORT) )
+          dispatch(setAlert(errorResponse.error, GENERATE_SHILOH_ATTENDANCE_REPORT)) 
         })       
       })
       .then(data => {
