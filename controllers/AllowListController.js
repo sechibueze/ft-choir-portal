@@ -1,8 +1,11 @@
 const xlstojson = require("xls-to-json-lc");
 const xlsxtojson = require("xlsx-to-json-lc");
 const AllowList = require('../models/AllowList');
+const Member = require('../models/Member');
+const EmailService = require('../helpers/sendEmail')
+const bcrypt = require('bcryptjs');
+const { ONBBOARDING_MESSAGE } = require('../config/constants');
 
-let exceltojson; //Initializatio
 
 const getAllowList = (req, res) => {
   AllowList
@@ -62,7 +65,7 @@ const verify = (req, res) => {
 };
 
 const loadAllowList = (req, res) => {
-  
+    let exceltojson; //Initializatio
   //start convert process
             /** Check the extension of the incoming file and
              *  use the appropriate module
@@ -89,23 +92,63 @@ const loadAllowList = (req, res) => {
                                 data: err
                             });
                     }
+                    
+                    // console.log('Results of converted file', result)
+                    const hashedData = result.map(row => {
+                        if (row.password) {
+                            row.password = bcrypt.hashSync(row.password, 12);
+                        } 
+                        // mailingList.push(row.email);
+                        return row
+                    })
+                    console.log('Results of hashed data', hashedData)
+                    
+                    Member
+                    .insertMany(hashedData, { ordered: false})
+                    .then(list => {
+                        let mailingList = [];
+                        let smsList = [];
 
-                    AllowList
-                        .insertMany(result)
-                        .then(list => {
+                        list.map(row => {
+                            mailingList.push(row.email);
+                            smsList.push(row.phone);
+                        })
+                        console.log('Results of uploaded file', mailingList)
+                        const msg = {
+                            to: mailingList,
+                            from: 'exco@ftc.com',
+                            subject: 'New Account',
+                            text: 'and easy to do anywhere, even with Node.js',
+                            html: ONBBOARDING_MESSAGE
+                          };
+                            // filter email and phone from list and send email and
+                        EmailService.send(msg)
+                        .then(response => {
                             return res.status(201).json({
-                                status: true,
-                                message: 'Allow list uploaded',
-                                data: list
+                            status: true,
+                            message: `Users uploaded`,
+                            data: response
                             });
                         })
-                        .catch(e => {
+                        .catch(err => {
+                            console.log('Err ', err)
                             return res.status(500).json({
-                                status: false,
-                                error: 'Failed to uplaod list',
-                                data: e
+                            status: false,
+                            errors: 'Failed to send email',
+                            data: err
                             });
                         })
+
+                        
+                    })
+                    .catch(e => {
+                        console.log('bulkinsert err', e)
+                        return res.status(500).json({
+                            status: false,
+                            error: 'Failed to uplaod list',
+                            data: e
+                        });
+                    })
                     
                 });
             } catch (e){

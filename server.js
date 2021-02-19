@@ -1,13 +1,15 @@
 const express = require('express');
-const path = require('path');
+const { ApolloServer } = require('apollo-server-express');
 const { config } = require('dotenv');
 const initDB = require('./config/initDB');
 config(); // Load .env Variables
-
+const typeDefs = require('./schema')
+const resolvers = require('./resolvers')
 const app = express();
-initDB();
+
 const port = process.env.PORT || 5000;
 app.use(express.json({extended: true}));
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header("Access-Control-Allow-Headers", 'x-auth-token, Content-Type, Access-Control-Allow-Headers');
@@ -33,13 +35,24 @@ app.use('/api/posts', postRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/shiloh', shilohEventRoute);
 
+const server = new ApolloServer({ 
+  typeDefs, 
+  resolvers,
+  context: ({ req }) => {
 
-if (process.env.NODE_ENV === 'production') {
-    // set static folder 
-    app.use(express.static('client/build'));
-    app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
+    return {
+      baseURL: req.hostname,
+      headers: req.headers,
+      currentUser: {}
+    }
+  }
+ });
 
-}
-app.listen(port, () => console.log(`FT_CHOIR_PORTAL::running on ${port}`));
+
+server.applyMiddleware({ app });
+initDB().then(() => {
+  console.log('Successfully to connected to DB')
+  app.listen({port}, () => console.log(`FT_CHOIR_PORTAL::running on https://localhost:${port}${server.graphqlPath}`));
+}).catch(err => {
+  console.log('Failed to connect to DB')
+})

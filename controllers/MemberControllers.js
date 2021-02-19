@@ -9,7 +9,7 @@ const { getDataURI } = require('../helpers/dataURI')
 const { cloudinaryUploader } = require('../config/cloudinaryConfig')
 const getAllMembers = (req, res) => {
   Member.find({})
-    .select('-password')
+    // .select('-password')
     
     .then(members => {
       return res.status(200).json({

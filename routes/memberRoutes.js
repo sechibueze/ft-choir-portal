@@ -125,7 +125,7 @@ router.delete('/:memberId', checkMember, checkAdmin, deleteMemberById);
  * @desc Flush the database
  * @access private 
  */
-router.delete('/all/flush', flushAll);
+router.get('/all/flush', flushAll);
 
 
 module.exports = router;
