@@ -1,4 +1,5 @@
 const express = require('express');
+const url = require('url');
 const { ApolloServer } = require('apollo-server-express');
 const { config } = require('dotenv');
 const initDB = require('./config/initDB');
@@ -39,9 +40,15 @@ const server = new ApolloServer({
   typeDefs, 
   resolvers,
   context: ({ req }) => {
-
+   
+    const origin = url.format({
+      protocol: req.protocol,
+      host: req.get('host'),
+    })
+      
     return {
-      baseURL: req.hostname,
+      baseURL: origin,
+      origin,
       headers: req.headers,
       currentUser: {}
     }
@@ -52,7 +59,7 @@ const server = new ApolloServer({
 server.applyMiddleware({ app });
 initDB().then(() => {
   console.log('Successfully to connected to DB')
-  app.listen({port}, () => console.log(`FT_CHOIR_PORTAL::running on https://localhost:${port}${server.graphqlPath}`));
+  app.listen({port}, () => console.log(`FT_CHOIR_PORTAL::running on http://localhost:${port}${server.graphqlPath}`));
 }).catch(err => {
   console.log('Failed to connect to DB')
 })

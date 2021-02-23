@@ -7,6 +7,8 @@ const Profile = require('../models/Profile');
 const memberAuthReducer = require('../helpers/memberAuthReducer');
 const { getDataURI } = require('../helpers/dataURI')
 const { cloudinaryUploader } = require('../config/cloudinaryConfig')
+const { FRONTEND_URL } = require('../config/constants');
+const { getPasswordRestLinkMessage } = require('../config/messages');
 const getAllMembers = (req, res) => {
   Member.find({})
     // .select('-password')
@@ -242,37 +244,16 @@ const forgotPassword = (req, res) => {
       member.generatePasswordReset()
       await member.save()
       // console.log('member token', member.resetPasswordToken)
-      const link = `${process.env.CLIENT}/password-reset/${ member.resetPasswordToken}`
+      
+      const link = `${FRONTEND_URL}/password-reset/${ member.resetPasswordToken}`
+      // console.log('origin ', req.headers.origin)
+      const passwordResetLinkMessage = getPasswordRestLinkMessage(member.firstname, link)
       const msg = {
         to: email,
-        from: process.env.SENDER_MAIL,
+        from: "admin@ftc.com",
         subject: 'Password Reset',
         text: 'and easy to do anywhere, even with Node.js',
-        html: `
-          Dear ${ member.firstname },
-          <br />
-          <br />
-          You are receiving this email because you have requested to reset your password for FTC portal,
-          Please, click on the link below to reset your password or copy the link and paste in your browser,
-          <br />
-          <br />
-
-          <a href="${link}" 
-            style="text-decoration: none;padding: 1rem 2.25rem; font-size: 1.2rem; font-weight: 900; background-color: red; color: white; margin: auto; text-align: center; display: block; width: 80%;"
-          > Reset Password </a>
-          <br />
-          <br />
-
-          ${ link }
-
-          <br />
-          <br />
-
-        Stay blessed, <br />
-        FTC Team
-
-
-        `,
+        html: passwordResetLinkMessage,
       };
 
       EmailService.send(msg)
@@ -286,7 +267,8 @@ const forgotPassword = (req, res) => {
         .catch(err => {
           return res.status(500).json({
             status: false,
-            errors: 'Failed to send email'
+            errors: 'Failed to send email',
+            err
           });
         })
 
@@ -317,7 +299,7 @@ const resetPassword = (req, res) => {
       if (!member) {
         return res.status(404).json({
           status: false,
-          errors: 'No such member record exists'
+          error: 'No such member record exists'
         });
       }
 

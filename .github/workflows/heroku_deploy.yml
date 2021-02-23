@@ -1,7 +1,7 @@
 name: Deploy FT Choir Portal server to Heroku
 
 on:
-  pull_requwst:
+  pull_request:
     branches:
       - v2
 jobs:
