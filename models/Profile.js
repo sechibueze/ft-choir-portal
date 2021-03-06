@@ -6,7 +6,8 @@ const ProfileSchema = new Schema({
   member: {
     type: Schema.Types.ObjectId,
     ref: 'Member',
-    required: true
+    required: true,
+    unique: true
   },
     title: {
     type: String,
@@ -154,4 +155,4 @@ const ProfileSchema = new Schema({
   
 }, { timestamps: true });
 
-module.exports = Profile = mongoose.model('profile', ProfileSchema);
+module.exports = Profile = mongoose.model('Profile', ProfileSchema);

@@ -3,18 +3,31 @@ const router = express.Router();
 const { check } = require('express-validator');
 const checkMember = require('../middlewares/checkMember');
 const checkAdmin = require('../middlewares/checkAdmin');
-const { getAllMembers, registerMember, 
-  toggleMemberAdminAuth, manageMemberAuth,
+const { 
+  membersRegistrationByUpload,
+  getAllMembers, 
+  registerMember, 
+  toggleMembersAdminAuth,
+   manageMemberAuth,
   loginMember, 
   updateMemberData,
   toggleMemberAdminAuthByMemberId,
   forgotPassword, resetPassword,
   getMemberByToken, 
-  deleteMemberById,
+  deleteMembersByIds,
   updateMemberImage,
-  flushAll
+  deleteMembers
 } = require('../controllers/MemberControllers');
+
 const { uploads } = require('../middlewares/uploadStorage')
+const uploadFile = require('../config/multerConfig')
+
+/**
+ * @route POST /api/members/uploads
+ * @desc Create new members by uploads
+ * @access private 
+ */
+router.post('/uploads', uploadFile.single('members_upload'), checkMember, membersRegistrationByUpload);
 
   /**
  * @route POST /api/members
@@ -23,19 +36,22 @@ const { uploads } = require('../middlewares/uploadStorage')
  */
 // Append a middleware to validate access from AccessToken table before going forwars
 router.post('/', [
-  check('accessId', 'Access ID is required').notEmpty(),
+  check('access', 'Access ID is required').notEmpty(),
   check('firstname', 'Firstname is required').notEmpty(),
   check('lastname', 'Lastname is required').notEmpty(),
   check('email', 'Email is required').isEmail(),
   check('password', 'Password is required').notEmpty()
 ], registerMember);
 
+
 /**
  * @route GET /api/members
  * @desc get All members
  * @access private 
  */
-router.get('/', getAllMembers);
+router.get('/', checkMember, getAllMembers);
+
+
 
 /**
  * @route POST /api/members/login
@@ -56,7 +72,7 @@ router.get('/auth', checkMember, getMemberByToken);
 
 /**
  * @route PUT /api/members/
- * @desc get current member data except password
+ * @desc update current member data except password
  * @access private 
  */
 router.put('/', checkMember, updateMemberData);
@@ -80,6 +96,15 @@ router.put('/resetpassword', [
    check('passwordResetToken', 'No Token found').notEmpty()
 ], resetPassword);
 
+
+
+/**
+ * @route[SECRET] PUT /api/members/admin
+ * @desc Make Admin '' any  in member can do this
+ * @access public 
+ */
+router.put('/admin', checkMember, toggleMembersAdminAuth);
+
 /**
  * @route PUT /api/members/image
  * @desc Change image
@@ -87,6 +112,13 @@ router.put('/resetpassword', [
  */
 router.put('/image', checkMember, uploads.single('image'), updateMemberImage);
 
+/**
+ * @route DELETE /api/members/delete
+ * @desc Delete Member By IDs
+ * @access private 
+ */
+router.put('/delete', checkMember, deleteMembersByIds);
+// ----------------------------------------------------------------------------
 /**
  * @route PUT /api/members/auth
  * @desc Manage Member Auth
@@ -98,34 +130,21 @@ router.put('/auth',
   check('actionType', 'Action Type is required').notEmpty()
 ],
 checkMember, checkAdmin, manageMemberAuth);
-
-/**
- * @route[SECRET] PUT /api/members/admin
- * @desc Make Admin '' any  in member can do this
- * @access public 
- */
-router.put('/admin', [ check('email', 'A member email is required').isEmail()],  toggleMemberAdminAuth);
-
 /**
  * @route PUT /api/members/:memberId/admin
  * @desc Admin make member admin
  * @access private/admin
  */
-router.put('/:memberId/admin', checkMember, checkAdmin,  toggleMemberAdminAuthByMemberId);
+router.put('/:memberId/admin', checkMember,  toggleMemberAdminAuthByMemberId);
+
+
 
 /**
- * @route DELETE /api/members/:memberId
- * @desc Delete Member By ID
- * @access private 
- */
-router.delete('/:memberId', checkMember, checkAdmin, deleteMemberById);
-
-/**
- * @route DELETE /api/members/flush
+ * @route DELETE /api/members
  * @desc Flush the database
  * @access private 
  */
-router.get('/all/flush', flushAll);
+router.delete('/', deleteMembers);
 
 
 module.exports = router;

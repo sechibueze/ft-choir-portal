@@ -10,7 +10,7 @@ const { getAllProfiles, getProfileById,
   updateNOKInfo,
   updateUnitInfo,
   updateChurchInfo,
-   deleteProfile } = require('../controllers/ProfileControllers');
+   deleteProfiles } = require('../controllers/ProfileControllers');
 
 /**
  * @route GET /api/profiles?
@@ -21,7 +21,7 @@ router.get('/', getAllProfiles);
 
 /**
  * @route GET /api/profiles/me
- * @desc GEt  Current members Profile By ID
+ * @desc GET  Current members Profile By ID
  * @access public
  */
 router.get('/me', checkMember,  getCurrentMemberProfile);
@@ -32,7 +32,7 @@ router.get('/me', checkMember,  getCurrentMemberProfile);
  * @desc GEt Profile By ID
  * @access public
  */
-router.get('/:profileId/profile',  getProfileById);
+router.get('/:profileId',  getProfileById);
 
 /**
  * @route GET /api/profiles/members/:memberId/
@@ -73,6 +73,6 @@ router.put('/churchinfo', checkMember, updateChurchInfo);
  * @desc Delete user profile
  * @access private ..member
  */
-router.delete('/:memberId', checkMember, checkAdmin,  deleteProfile);
+router.put('/', checkMember, deleteProfiles);
 
 module.exports = router;

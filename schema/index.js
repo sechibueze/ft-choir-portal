@@ -10,6 +10,11 @@ type User{
     auth: [String!]
 }
 
+type Result{
+    status: Boolean!
+    error: String
+    data: String
+}
 type AuthResponse{
     token: String!
 }
@@ -24,6 +29,8 @@ type Mutation{
     signup(
         firstname: String! lastname: String! email: String! password: String! accessId: String!
     ): AuthResponse!
+    sendPasswordResetLink(email: String!): Result!
+    resetPassword(newPassword: String! passwordResetToken: String!): Result!
 }
 `;
 

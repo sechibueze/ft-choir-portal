@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const Profile = require('../models/Profile');
+const Member = require('../models/Member');
 
 // Get All Profiles in DB
 const getAllProfiles = (req, res) => {
@@ -15,7 +16,6 @@ const getAllProfiles = (req, res) => {
       return res.status(200).json({
         status: true,
         message: 'List of Profiles',
-        count: profiles.length,
         data: profiles
       });
     })
@@ -23,32 +23,35 @@ const getAllProfiles = (req, res) => {
 
       return res.status(500).json({
         status: false,
-        error: 'Failed to get profiles'
+        message: 'Failed to get profiles',
+        error: err
       });
 
     });
 };
+
 // Get Profiles by Id in @params
 const getProfileById = (req, res) => {
   const {profileId} = req.params;
   if (!profileId) {
-     return res.status(400).json({
-          status: false,
-          error: 'No Profile Identifier specified'
-        });
+    return res.status(400).json({
+      status: false,
+      message: 'No Profile Identifier specified'
+    });
   }
   Profile.findOne({ _id: profileId})
     .populate({
       path: 'member',
-      select: ['firstname', 'middlename', 'lastname', 'email', 'accessId'],
+      select: ['firstname', 'middlename', 'lastname', 'email', 'access', "auth"],
       model: Member
     })
     .then(profile => {
 
       if (!profile) {
-        return res.status(404).json({
+        return res.status(200).json({
           status: false,
-          error: 'Profile not found'
+          message: 'Profile not found',
+          data: profile
         });
       }
 
@@ -74,7 +77,7 @@ const getProfileByMemeberId = (req, res) => {
   if (!memberId) {
      return res.status(400).json({
           status: false,
-          error: 'No Profile Identifier specified'
+          message: 'No Profile Identifier specified'
         });
   }
   Profile.findOne({ member: memberId})
@@ -107,67 +110,103 @@ const getProfileByMemeberId = (req, res) => {
 
     });
 };
+
 // Get Profiles by Id in @params
 const getCurrentMemberProfile = (req, res) => {
   const memberId = req.currentMember.memberId;
   if (!memberId) {
-     return res.status(400).json({
-          status: false,
-          error: 'No Profile Identifier specified'
-        });
+    return res.status(400).json({
+      status: false,
+      message: 'No Profile Identifier specified'
+    });
   }
-  console.log('memberid', memberId)
-  Profile.findOne({ member: memberId})
-    .populate({
-      path: 'member',
-      select: ['firstname', 'middlename', 'lastname', 'email', 'imageUrl', 'accessId'],
-      model: Member
-    })
-    .then(profile => {
-      
 
-      return res.status(200).json({
-        status: true,
-        message: 'Requested Profile data',
-        data: profile
-      });
+  Member
+    .findOne({ _id: memberId })
+    .then(member => {
+
+      if (!member) {
+        return res.status(400).json({
+          status: false,
+          message: 'No account exists for you'
+        });
+      }
+
+      Profile.findOne({ member: memberId})
+
+        .then(profile => {
+          
+          if (!profile) {
+            return res.status(200).json({
+              status: false,
+              message: 'No profile yet, create one',
+              data: profile
+            });
+          }
+
+          profile.member = member;
+
+          return res.status(200).json({
+            status: true,
+            message: 'Requested Profile data',
+            data: profile
+          });
+        })
+        .catch(err => {
+
+          return res.status(500).json({
+            status: false,
+            message: 'Failed to get profile',
+            err
+          });
+        })
     })
     .catch(err => {
-
       return res.status(500).json({
         status: false,
-        error: 'Failed to get profiles',
+        message: 'Failed to get member',
         err
       });
-
-    });
+    })
 };
+
 
 // Create or update profiles
 const createProfile = (req, res) => {
 
   const member = req.currentMember.memberId;
-  // console.log('gender ', req.body.gender)
-  const {
-    title,
-    gender,
-    phone,
-    whatsapp_phone,
-    contact_address,
-    pha,
-    dob,
-    wed_date,
-    marital_status,
-    work_status,
-    profession,
-    employer_name,
-    employer_address,
-    state_origin,
-    nationality
-  } = req.body;
-  
-  let profile = {}
-    profile.member = member;
+  console.log("member data ", req.currentMember )
+  Member.findOne({ _id: member })
+    .then(memberData => {
+      if (!memberData) {
+        return res.status(500).json({
+          status: false,
+          message: 'Failed to created/update profile',
+          err
+        });
+      }
+
+      const {
+        _id,
+        title,
+        gender,
+        phone,
+        whatsapp_phone,
+        contact_address,
+        pha,
+        dob,
+        wed_date,
+        marital_status,
+        work_status,
+        profession,
+        employer_name,
+        employer_address,
+        state_origin,
+        nationality
+      } = req.body;
+
+      let profile = {}
+    profile.member = _id ? _id : memberData._id;
     if (title) profile.title = title;
     if (gender) profile.gender = gender;
     if (phone) profile.phone = phone;
@@ -183,7 +222,7 @@ const createProfile = (req, res) => {
     if (employer_address) profile.employer_address = employer_address;
     if (state_origin) profile.state_origin = state_origin;
     if (nationality) profile.nationality = nationality;
-          
+
     // If profile, update else create
     Profile.findOneAndUpdate({ member }, profile, {upsert: true, new: true})
       .then(profile => {
@@ -198,17 +237,27 @@ const createProfile = (req, res) => {
 
         return res.status(500).json({
           status: false,
-          error: 'Failed to created/update profile'
+          message: 'Failed to created/update profile',
+          err
         });
       });
+    })
+    .catch(err => {
+      return res.status(500).json({
+        status: false,
+        message: 'Could not find a member, please craete an account',
+        err
+      });
+    })
 }
 
 const updateNOKInfo = (req, res) => {
   
   const member = req.currentMember.memberId;
-  
+  // let filter = {};
   const {
     // NOK
+    _id,
     nok_name,
     nok_address,
     nok_phone,
@@ -217,15 +266,17 @@ const updateNOKInfo = (req, res) => {
     nok_email,
     
   } = req.body;
-  
-   Profile.findOne({ member })
+   const filter = _id && req.currentMember.auth.includes("admin") ? { _id } : { member }
+   
+   Profile.findOne(filter)
     .then(profile => {
       if (!profile) {
         return res.status(404).json({
-                  status: false,
-                  error: 'No profile found'
-                  
-                });
+          status: false,
+          message: 'No profile found',
+          data: profile
+          
+        });
       }
            
       // Profile was found
@@ -240,7 +291,7 @@ const updateNOKInfo = (req, res) => {
         if (err) {
           return res.status(500).json({
             status: false,
-            error: 'Cannot Update NOK profile'
+            message: 'Cannot Update NOK profile'
           });
         }
         return res.status(200).json({
@@ -253,13 +304,14 @@ const updateNOKInfo = (req, res) => {
     .catch(err => {
       return res.status(500).json({
         status: false,
-        error: 'Failed to fetch profile'
+        message: 'Failed to fetch profile'
       });
     });
 }
 const updateUnitInfo = (req, res) => {
   const member = req.currentMember.memberId;
   const {
+    _id,
     group,
     vocal_part,
     rehearsal_location,
@@ -267,15 +319,17 @@ const updateUnitInfo = (req, res) => {
     leadership_status,
     sub_group
   } = req.body;
-  
-   Profile.findOne({ member })
+  const filter = _id && req.currentMember.auth.includes("admin") ? { _id } : { member }
+   
+   Profile.findOne(filter)
     .then(profile => {
 
       if (!profile) {
         return res.status(404).json({
-                  status: false,
-                  error: 'Missen profile'
-                });
+          status: false,
+          message: 'Missen profile',
+          data: profile
+        });
       }
            
       if (group) profile.unit_info.group = group;
@@ -311,6 +365,7 @@ const updateChurchInfo = (req, res) => {
   const member = req.currentMember.memberId;
   const {
     // Church Info
+    _id,
     wsf_status,
     new_birth_year,
     holy_spirit_year,
@@ -320,15 +375,16 @@ const updateChurchInfo = (req, res) => {
     district,
     zone
   } = req.body; 
-   Profile.findOne({ member })
+  const filter = _id && req.currentMember.auth.includes("admin") ? { _id } : { member }
+   Profile.findOne(filter)
     .then(profile => {
 
       if (!profile) {
         return res.status(404).json({
-                  status: false,
-                  error: 'Cannot Updated Church Info profile'
-                  
-                });
+          status: false,
+          message: 'Cannot Updated Church Info profile',
+          data: profile
+        });
       }
             
         // profile.church_info = {};
@@ -345,7 +401,7 @@ const updateChurchInfo = (req, res) => {
           if (err) {
             return res.status(500).json({
               status: false,
-              error: 'Cannot Update Church Info profile'
+              message: 'Cannot Update Church Info profile'
             });
           }
           return res.status(200).json({
@@ -358,28 +414,39 @@ const updateChurchInfo = (req, res) => {
     .catch(err => {
       return res.status(500).json({
         status: false,
-        error: 'Failed to fetch profile'
+        message: 'Failed to fetch profile'
       });
     });
 }
 
 // A member can delete his profile in which case, he can recreate it
-const deleteProfile = (req, res) => {
+const deleteProfiles = (req, res) => {
   // const currentMemberId = req.currentMember.memberId;
-  const memberId = req.params.memberId;
+  console.log("profiles to delete", req.body)
+  const { profiles } = req.body;
+  
+  Profile.find({ _id: { $in: profiles} }, (err, results) => {
 
-  Profile.findOneAndRemove({ member: memberId }, (err, result) => {
     if (err) {
       return res.status(500).json({
         status: false,
-        error: 'Failed to delete profile'
+        message: 'Failed to delete profile',
+        err
       });
     }
+    if (results.length < 1) {
+      return res.status(400).json({
+        status: false,
+        message: 'No profile found',
+      });
+    }
+
+    results.map(async doc => doc.remove())
 
     return res.status(200).json({
       status: true,
       message: 'Deleted profile',
-      data: memberId
+      data: profiles
     });
 
   });
@@ -390,4 +457,4 @@ module.exports = { getAllProfiles,
   createProfile, updateNOKInfo, updateUnitInfo,
   updateChurchInfo,
   getProfileByMemeberId,
-  deleteProfile };
+  deleteProfiles };
