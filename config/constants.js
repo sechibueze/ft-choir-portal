@@ -6,17 +6,5 @@ module.exports = {
         "inactive",
         "suspended",
     ],
-    ONBBOARDING_MESSAGE: `
-        Dear Friend,
-        <br />
-            Use the link below and password to login to the choir portal
-        <br />
-        <br />
-        Email: this email address
-        Password: 123456
-        <br />
-
-        Stay blessed, <br />
-        FTC Team                            
-  `,
+    ADMIN_EMAIL: "ftc@gmail.com"
 }
