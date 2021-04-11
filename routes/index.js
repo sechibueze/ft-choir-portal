@@ -6,19 +6,16 @@ const router = express.Router();
 const memberRoutes = require("./memberRoutes");
 const eventRoutes = require("./eventRoutes");
 const profileRoutes = require("./profileRoutes");
-// const postRoutes = require('./postRoutes');
-// const reportRoutes = require('./reportRoutes');
-// const accessTokenRoutes = require('./accessTokenRoutes');
-// // const allowlistRoutes = require('./allowlistRoutes');
-// const shilohEventRoute = require('./shilohEventRoute');
+const postRoutes = require("./postRoutes");
+const shilohEventRoute = require("./shilohEventRoute");
 
-// router.use('/allowlist', allowlistRoutes);
 router.use("/events", eventRoutes);
 router.use("/members", memberRoutes);
 router.use("/profiles", profileRoutes);
+router.use("/posts", postRoutes);
+router.use("/shiloh", shilohEventRoute);
+
 // router.use('/access', accessTokenRoutes);
-// router.use('/posts', postRoutes);
 // router.use('/reports', reportRoutes);
-// router.use('/shiloh', shilohEventRoute);
 
 module.exports = router;
