@@ -1,13 +1,11 @@
 {
   "name": "ft-choir-portal",
   "version": "1.0.0",
-  "description": "",
+  "description": "A portal for Faith Tabernacle Choir, Canaanland to manage members and activities",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js",
-    "client": "npm start --prefix client",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "Samuel Chibueze",
